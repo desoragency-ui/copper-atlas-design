@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Gallery from './Gallery';
 import Accordion from './Accordion';
 import { useCart } from '@/lib/cart';
@@ -18,9 +18,10 @@ export default function ProductDetail({ product: p, lang }) {
   const { add } = useCart();
 
   const [finishId, setFinishId] = useState(p.finishes[0].id);
-  const [sizeIdx, setSizeIdx] = useState(p.sizes ? 1 : null); // default 30 cm — the volume seller
+  const [sizeIdx, setSizeIdx] = useState(p.sizes ? 1 : null); // default 30 cm - the volume seller
   const [qty, setQty] = useState(1);
   const [done, setDone] = useState(false);
+  const buyRef = useRef(null);
 
   const finish = useMemo(
     () => p.finishes.find((f) => f.id === finishId) ?? p.finishes[0],
@@ -55,8 +56,8 @@ export default function ProductDetail({ product: p, lang }) {
 
   const quoteText =
     lang === 'fr'
-      ? `Bonjour Copper Atlas — je souhaite un prix pour : ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantité ${qty}.`
-      : `Hello Copper Atlas — I'd like a price for: ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantity ${qty}.`;
+      ? `Bonjour Copper Atlas - je souhaite un prix pour : ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantité ${qty}.`
+      : `Hello Copper Atlas - I'd like a price for: ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantity ${qty}.`;
 
   return (
     <>
@@ -116,7 +117,7 @@ export default function ProductDetail({ product: p, lang }) {
           {/* finish */}
           <fieldset className="mb-8">
             <legend className="label">
-              {d.finish} — <span style={{ color: 'var(--brass)' }}>{t(finish.name, lang)}</span>
+              {d.finish} - <span style={{ color: 'var(--brass)' }}>{t(finish.name, lang)}</span>
             </legend>
             <div className="flex flex-wrap gap-2.5">
               {p.finishes.map((f) => {
@@ -184,13 +185,13 @@ export default function ProductDetail({ product: p, lang }) {
               <p className="mt-3 text-[12.5px] opacity-50">
                 {lang === 'fr'
                   ? 'Le diamètre est celui de l’abat-jour. Comptez 2,5 à 3 fois le diamètre en espace libre autour.'
-                  : 'Diameter is measured across the shade. Allow 2.5–3× the diameter of clear space around it.'}
+                  : 'Diameter is measured across the shade. Allow 2.5-3× the diameter of clear space around it.'}
               </p>
             </fieldset>
           )}
 
           {/* qty + add */}
-          <div className="flex flex-wrap items-stretch gap-3">
+          <div ref={buyRef} className="flex flex-wrap items-stretch gap-3">
             <div className="flex items-center gap-1 rounded-full border px-1 edge">
               <button
                 onClick={() => setQty((n) => Math.max(1, n - 1))}
@@ -326,31 +327,26 @@ export default function ProductDetail({ product: p, lang }) {
         quoteHref={waLink(quoteText)}
         quoteOnly={!!p.priceOnRequest}
         done={done}
+        watchRef={buyRef}
       />
     </>
   );
 }
 
-/** Mobile sticky add-to-cart — appears once the buy box has scrolled away. */
-function StickyBar({ lang, name, price, onAdd, quoteHref, quoteOnly, done }) {
+/** Mobile sticky add-to-cart: appears once the buy box has scrolled away. */
+function StickyBar({ lang, name, price, onAdd, quoteHref, quoteOnly, done, watchRef }) {
   const d = dict(lang);
   const [show, setShow] = useState(false);
 
+  /* Driven by an IntersectionObserver on the real buy box rather than a scroll
+     listener, so it stays correct at any viewport height and costs no frames. */
   useEffect(() => {
-    let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        setShow(window.scrollY > 760);
-        frame = 0;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
+    const el = watchRef?.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([e]) => setShow(!e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [watchRef]);
 
   return (
     <div

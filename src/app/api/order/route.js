@@ -10,7 +10,7 @@ export const runtime = 'nodejs';
  * customer always has the WhatsApp fallback in the UI.
  *
  * Later: set STRIPE_SECRET_KEY and NEXT_PUBLIC_STRIPE_ENABLED=1 and swap the
- * marked block for a Stripe Checkout Session — the rest of the flow is unchanged.
+ * marked block for a Stripe Checkout Session - the rest of the flow is unchanged.
  *
  * Prices are recomputed here from the catalogue, never trusted from the client.
  */
@@ -85,21 +85,21 @@ export async function POST(request) {
     return NextResponse.json({ error: 'No valid line items' }, { status: 400 });
   }
 
-  // Server-side total — the client's number is ignored.
+  // Server-side total - the client's number is ignored.
   const subtotal = items.reduce((n, l) => n + (l.total ?? 0), 0);
   const quoteOnly = items.filter((l) => l.total == null);
   const ref = `CA-${Date.now().toString(36).toUpperCase()}`;
 
   /* ── STRIPE SWAP POINT ───────────────────────────────────────────────────
    * if (process.env.STRIPE_SECRET_KEY && quoteOnly.length === 0) {
-   *   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-   *   const session = await stripe.checkout.sessions.create({ ... });
-   *   return NextResponse.json({ ok: true, url: session.url });
+   * const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+   * const session = await stripe.checkout.sessions.create({ ... });
+   * return NextResponse.json({ ok: true, url: session.url });
    * }
    * ──────────────────────────────────────────────────────────────────────── */
 
   const lines = items
-    .map((l) => `• ${l.name} — ${l.finish}${l.size ? `, ${l.size}cm` : ''} × ${l.qty} — ${l.total == null ? 'PRICE ON REQUEST' : `$${l.total}`}`)
+    .map((l) => `• ${l.name} - ${l.finish}${l.size ? `, ${l.size}cm` : ''} × ${l.qty} - ${l.total == null ? 'PRICE ON REQUEST' : `$${l.total}`}`)
     .join('\n');
 
   const text =
@@ -122,7 +122,7 @@ export async function POST(request) {
           from: process.env.ORDER_EMAIL_FROM || 'orders@copperatlasdesign.com',
           to: [to],
           reply_to: customer.email,
-          subject: `Order ${ref} — ${customer.name} — $${subtotal}`,
+          subject: `Order ${ref} - ${customer.name} - $${subtotal}`,
           text,
         }),
       });
@@ -132,7 +132,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Could not send order' }, { status: 502 });
     }
   } else {
-    // No mail provider configured yet — keep the order in the platform logs.
+    // No mail provider configured yet - keep the order in the platform logs.
     console.log('[order] (no RESEND_API_KEY/ORDER_EMAIL_TO configured)\n', text);
   }
 

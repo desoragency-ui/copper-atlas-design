@@ -33,8 +33,8 @@ export async function generateMetadata({ params }) {
     metadataBase: new URL(SHOP.url),
     title: {
       default: fr
-        ? 'Copper Atlas Design — Luminaires & Vasques en Cuivre Martelé, Marrakech'
-        : 'Copper Atlas Design — Hand-Hammered Copper Lighting & Basins, Marrakech',
+        ? 'Copper Atlas Design - Luminaires & Vasques en Cuivre Martelé, Marrakech'
+        : 'Copper Atlas Design - Hand-Hammered Copper Lighting & Basins, Marrakech',
       template: `%s · ${SHOP.name}`,
     },
     description: fr
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }) {
 }
 
 export const viewport = {
-  themeColor: '#0E2B24',
+  themeColor: '#14483B',
   width: 'device-width',
   initialScale: 1,
 };
@@ -134,7 +134,8 @@ export default async function LangLayout({ children, params }) {
         <CartProvider>
           <Announce lang={lang} />
           <Header lang={lang} />
-          <main id="main" className="pt-[92px] md:pt-[104px]">
+          {/* announcement strip + nav offset, so nothing sits under the chrome */}
+          <main id="main" style={{ paddingTop: 'calc(var(--announce-h) + var(--nav-h) + 10px)' }}>
             {children}
           </main>
           <Footer lang={lang} />

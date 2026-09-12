@@ -14,8 +14,8 @@ export async function generateMetadata({ params }) {
     title: dict(lang).contact,
     description:
       lang === 'fr'
-        ? 'Écrivez directement à l’atelier Copper Atlas Design à Marrakech — WhatsApp, e-mail ou formulaire.'
-        : 'Message the Copper Atlas Design workshop in Marrakech directly — WhatsApp, email or the form.',
+        ? 'Écrivez directement à l’atelier Copper Atlas Design à Marrakech - WhatsApp, e-mail ou formulaire.'
+        : 'Message the Copper Atlas Design workshop in Marrakech directly - WhatsApp, email or the form.',
   };
 }
 
@@ -30,13 +30,13 @@ export default async function ContactPage({ params }) {
       title={fr ? 'Parler à l’atelier' : 'Talk to the workshop'}
       lead={
         fr
-          ? 'Questions de dimensions, finitions, délais, quantités pour l’hôtellerie ou demandes sur mesure — tout arrive directement chez Tarik. Réponse en général le jour même.'
-          : 'Sizing, finishes, lead times, hospitality quantities or a fully bespoke piece — everything reaches Tarik directly. Usually answered the same day.'
+          ? 'Questions de dimensions, finitions, délais, quantités pour l’hôtellerie ou demandes sur mesure - tout arrive directement chez Tarik. Réponse en général le jour même.'
+          : 'Sizing, finishes, lead times, hospitality quantities or a fully bespoke piece - everything reaches Tarik directly. Usually answered the same day.'
       }
     >
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <Reveal className="flex flex-col gap-4">
-          <a href={waLink(fr ? 'Bonjour Copper Atlas —' : 'Hello Copper Atlas —')}
+          <a href={waLink(fr ? 'Bonjour Copper Atlas - ' : 'Hello Copper Atlas - ')}
             target="_blank" rel="noopener noreferrer" className="group/card block">
             <div className="bezel transition-colors duration-600 group-hover/card:border-[rgba(224,169,109,0.45)]">
               <div className="bezel-core flex items-center gap-5 p-6">
@@ -47,7 +47,7 @@ export default async function ContactPage({ params }) {
                 <span>
                   <span className="block font-display text-[22px] leading-tight">WhatsApp</span>
                   <span className="block text-[13px] opacity-55">
-                    {fr ? 'Le plus rapide — photos et mesures bienvenues' : 'Fastest — send photos and measurements'}
+                    {fr ? 'Le plus rapide - photos et mesures bienvenues' : 'Fastest - send photos and measurements'}
                   </span>
                 </span>
                 <ArrowUpRight className="ml-auto h-5 w-5 shrink-0 opacity-40 transition-transform duration-500 group-hover/card:translate-x-1 group-hover/card:-translate-y-1" />
@@ -80,7 +80,7 @@ export default async function ContactPage({ params }) {
                 {fr ? 'Visites sur rendez-vous' : 'Visits by appointment'}
               </p>
               <p className="mt-4 text-[13px] opacity-50">
-                {fr ? 'Lun–Sam · 9h–18h (GMT+1)' : 'Mon–Sat · 9am–6pm (GMT+1)'}
+                {fr ? 'Lun-Sam · 9h-18h (GMT+1)' : 'Mon-Sat · 9am-6pm (GMT+1)'}
               </p>
             </div>
           </div>

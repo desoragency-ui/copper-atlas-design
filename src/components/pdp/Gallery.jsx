@@ -63,13 +63,13 @@ export default function Gallery({ images, alt, lang }) {
           </button>
         </div>
 
-        {/* thumbs — row on mobile, column on desktop */}
+        {/* thumbs - row on mobile, column on desktop */}
         <div className="no-scrollbar flex gap-3 overflow-x-auto lg:w-[92px] lg:flex-col lg:overflow-y-auto">
           {images.map((src, n) => (
             <button
               key={src}
               onClick={() => setI(n)}
-              aria-label={`${alt} — ${n + 1}`}
+              aria-label={`${alt} - ${n + 1}`}
               aria-current={n === i}
               className="relative aspect-[4/5] w-[70px] shrink-0 overflow-hidden rounded-xl transition-all duration-500 ease-atlas lg:w-full"
               style={{

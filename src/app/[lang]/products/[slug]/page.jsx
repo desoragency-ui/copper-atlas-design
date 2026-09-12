@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const price = fromPrice(p);
   return {
     title: t(p.name, lang),
-    description: `${t(p.tagline, lang)} — ${t(p.description, lang).slice(0, 150)}…`,
+    description: `${t(p.tagline, lang)} - ${t(p.description, lang).slice(0, 150)}…`,
     alternates: {
       canonical: `${SHOP.url}/${lang}/products/${slug}`,
       languages: {
@@ -49,7 +49,7 @@ export default async function ProductPage({ params }) {
   const price = fromPrice(p);
   const agg = ratingFor(slug);
 
-  // Product schema. Reviews are only emitted when every review is genuine —
+  // Product schema. Reviews are only emitted when every review is genuine - 
   // never publish aggregateRating built from demo data.
   const schema = {
     '@context': 'https://schema.org',

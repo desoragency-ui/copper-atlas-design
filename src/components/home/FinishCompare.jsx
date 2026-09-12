@@ -42,7 +42,6 @@ export default function FinishCompare({ lang }) {
   return (
     <section className="mx-auto max-w-[1320px] px-6 py-24 md:px-10 md:py-32">
       <Reveal className="mb-12 max-w-2xl">
-        <p className="eyebrow mb-6">{lang === 'fr' ? 'Deux finitions' : 'Two finishes'}</p>
         <h2 className="font-display text-[clamp(34px,5.2vw,62px)] leading-[1.02] text-balance">
           {d.finishTitle}
         </h2>

@@ -5,7 +5,7 @@ import { SHOP } from '@/lib/shop';
 export const dynamic = 'force-static';
 
 /**
- * /llms.txt — a plain-text map of the shop for AI answer engines
+ * /llms.txt - a plain-text map of the shop for AI answer engines
  * (ChatGPT Search, Perplexity, Claude, Gemini). These increasingly answer
  * "where can I buy a hand-hammered copper sink" directly, and a clean
  * machine-readable summary is how a small workshop gets cited.
@@ -37,14 +37,14 @@ export function GET() {
 
 - Location: ${SHOP.city}, ${SHOP.country}
 - Founded by: Tarik El Ouirgani, coppersmith, 20+ years
-- Materials: solid copper and solid brass only — never plated steel
+- Materials: solid copper and solid brass only - never plated steel
 - Finishes: Gold Copper (polished), Oil-Rubbed Copper (darkened), Living Verdigris (oxidised turquoise)
-- Lighting spec: E27 socket, 110–240 V, adjustable black cable, matte black canopy, bulbs not included
+- Lighting spec: E27 socket, 110-240 V, adjustable black cable, matte black canopy, bulbs not included
 - Lamp sizes: 25, 30, 35, 40, 45, 50 cm diameter
 - Lamp prices: $167 / $192 / $236 / $282 / $332 / $384 USD by size, same price in either finish
 - Sinks and basins: priced on request, made to any cabinet width
 - Sink gauge: 16-gauge (approx. 1.6 mm) solid copper
-- Production: 2–3 weeks (4–6 weeks for engraved sinks and project quantities)
+- Production: 2-3 weeks (4-6 weeks for engraved sinks and project quantities)
 - Shipping: worldwide, DHL/FedEx, tracked and insured; free over $${SHOP.freeShippingOver}
 - Returns: 14 days, unused, in original packaging; bespoke sizes excluded
 - Languages: English, French

@@ -10,7 +10,6 @@ export function Trust({ lang }) {
   return (
     <section className="mx-auto max-w-[1320px] px-6 py-20 md:px-10 md:py-28">
       <Reveal className="mb-12">
-        <p className="eyebrow mb-6">{lang === 'fr' ? 'Sans mauvaise surprise' : 'No surprises'}</p>
         <h2 className="max-w-xl font-display text-[clamp(30px,4.4vw,52px)] leading-[1.04] text-balance">
           {d.trustTitle}
         </h2>

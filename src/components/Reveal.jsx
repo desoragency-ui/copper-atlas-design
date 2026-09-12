@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * Scroll-entry animation via IntersectionObserver — never a scroll listener.
+ * Scroll-entry animation via IntersectionObserver - never a scroll listener.
  * Unobserves after the first intersection so nothing keeps running.
  */
 export default function Reveal({ children, delay = 0, as: Tag = 'div', className = '', ...rest }) {

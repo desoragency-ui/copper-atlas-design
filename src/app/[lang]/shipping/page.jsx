@@ -19,9 +19,9 @@ export async function generateMetadata({ params }) {
 const COPY = {
   en: [
     ['Production time',
-      'Two to three weeks. Nothing is held in stock — your order starts a piece at the bench. Sinks with engraved aprons and project quantities take four to six weeks; you are given a real date, not a range, once the order is confirmed.'],
+      'Two to three weeks. Nothing is held in stock - your order starts a piece at the bench. Sinks with engraved aprons and project quantities take four to six weeks; you are given a real date, not a range, once the order is confirmed.'],
     ['Shipping',
-      'Worldwide by DHL Express or FedEx, tracked and insured to full value. Delivery is typically 3–6 working days after dispatch to Europe and North America, 5–9 elsewhere. Every parcel is double-boxed with moulded protection; lighting ships with the shade cradled separately from the canopy.'],
+      'Worldwide by DHL Express or FedEx, tracked and insured to full value. Delivery is typically 3-6 working days after dispatch to Europe and North America, 5-9 elsewhere. Every parcel is double-boxed with moulded protection; lighting ships with the shade cradled separately from the canopy.'],
     ['Shipping cost',
       'Quoted on your real address and the real weight before you pay anything. Copper is heavy and we would rather show you the number than bury it in the product price. Orders over $400 ship free to most destinations.'],
     ['Customs & duties',
@@ -31,11 +31,11 @@ const COPY = {
     ['Returns',
       'Fourteen days from delivery. The piece must be unused and in its original packaging. Refund is issued to the original payment method minus the outbound shipping cost. Return shipping is paid by you unless the piece was faulty or wrongly sent.'],
     ['What cannot be returned',
-      'Bespoke sizes, custom sink dimensions, engraved-to-order panels and matched project batches — they cannot be resold. This is stated clearly in writing before a bespoke order is confirmed, never buried in the small print.'],
+      'Bespoke sizes, custom sink dimensions, engraved-to-order panels and matched project batches - they cannot be resold. This is stated clearly in writing before a bespoke order is confirmed, never buried in the small print.'],
   ],
   fr: [
     ['Délai de fabrication',
-      'Deux à trois semaines. Rien n’est stocké — votre commande lance une pièce à l’établi. Les éviers à tablier gravé et les quantités projet demandent quatre à six semaines ; une vraie date vous est donnée à la confirmation, pas une fourchette.'],
+      'Deux à trois semaines. Rien n’est stocké - votre commande lance une pièce à l’établi. Les éviers à tablier gravé et les quantités projet demandent quatre à six semaines ; une vraie date vous est donnée à la confirmation, pas une fourchette.'],
     ['Expédition',
       'Dans le monde entier par DHL Express ou FedEx, suivi et assuré à la valeur totale. Livraison typique de 3 à 6 jours ouvrés après expédition vers l’Europe et l’Amérique du Nord, 5 à 9 ailleurs. Chaque colis est en double carton avec calage moulé ; les luminaires partent abat-jour calé séparément de la rosace.'],
     ['Frais de port',
@@ -47,7 +47,7 @@ const COPY = {
     ['Retours',
       'Quatorze jours après livraison. La pièce doit être non utilisée et dans son emballage d’origine. Remboursement sur le moyen de paiement initial, hors frais de port aller. Le retour est à votre charge, sauf pièce défectueuse ou erreur d’expédition.'],
     ['Ce qui n’est pas repris',
-      'Tailles sur mesure, dimensions d’évier spécifiques, panneaux gravés à la commande et lots accordés pour un projet — invendables. C’est indiqué noir sur blanc avant confirmation, jamais en petits caractères.'],
+      'Tailles sur mesure, dimensions d’évier spécifiques, panneaux gravés à la commande et lots accordés pour un projet - invendables. C’est indiqué noir sur blanc avant confirmation, jamais en petits caractères.'],
   ],
 };
 
@@ -62,8 +62,8 @@ export default async function ShippingPage({ params }) {
       title={d.shippingReturns}
       lead={
         lang === 'fr'
-          ? 'Tout ce qu’il faut savoir avant d’acheter une pièce lourde faite main à l’autre bout du monde — écrit sans détour.'
-          : 'Everything worth knowing before you buy a heavy handmade object from the other side of the world — written plainly.'
+          ? 'Tout ce qu’il faut savoir avant d’acheter une pièce lourde faite main à l’autre bout du monde - écrit sans détour.'
+          : 'Everything worth knowing before you buy a heavy handmade object from the other side of the world - written plainly.'
       }
     >
       <Prose>

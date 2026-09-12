@@ -1,5 +1,5 @@
 /**
- * Copper Atlas Design — product catalogue.
+ * Copper Atlas Design - product catalogue.
  *
  * ── HOW TO EDIT ─────────────────────────────────────────────────────────────
  * This file is the single source of truth for the whole storefront. Changing a
@@ -7,15 +7,15 @@
  * product pages, the cart, the sitemap and the structured data at once.
  *
  * PRICING
- *   Lamps use `sizes[]` — Tarik's confirmed retail list, USD:
- *     25cm $167 · 30cm $192 · 35cm $236 · 40cm $282 · 45cm $332 · 50cm $384
- *   Sinks, basins and spa pieces are `priceOnRequest: true` until Tarik sends
- *   his sink price sheet. Replace with `price: <usd>` (or a `sizes[]` array)
- *   and the "Price on request" CTA turns into a normal Add-to-cart button.
+ * Lamps use `sizes[]` - Tarik's confirmed retail list, USD:
+ * 25cm $167 · 30cm $192 · 35cm $236 · 40cm $282 · 45cm $332 · 50cm $384
+ * Sinks, basins and spa pieces are `priceOnRequest: true` until Tarik sends
+ * his sink price sheet. Replace with `price: <usd>` (or a `sizes[]` array)
+ * and the "Price on request" CTA turns into a normal Add-to-cart button.
  *
  * FINISHES
- *   Both finishes currently carry the same price. If Oil-Rubbed ends up costing
- *   more, add `priceDelta: <usd>` to that finish and it is added per unit.
+ * Both finishes currently carry the same price. If Oil-Rubbed ends up costing
+ * more, add `priceDelta: <usd>` to that finish and it is added per unit.
  * ────────────────────────────────────────────────────────────────────────────
  */
 
@@ -127,8 +127,8 @@ export const PRODUCTS = [
       fr: 'Trois pétales pliés, suspendus à trois hauteurs',
     },
     description: {
-      en: 'Each petal starts as a flat brass disc and is hammered by hand until it curls in on itself — the fold is what holds the light. Hung as a cluster of three from one matte-black canopy, the shades sit at different drops so the light layers instead of flattening. No two petals fold the same way.',
-      fr: 'Chaque pétale part d’un disque de laiton plat, martelé à la main jusqu’à s’enrouler sur lui-même — c’est le pli qui retient la lumière. Suspendus en grappe de trois sous une même rosace noir mat, les abat-jour tombent à des hauteurs différentes pour superposer la lumière au lieu de l’aplatir. Aucun pétale ne se plie deux fois pareil.',
+      en: 'Each petal starts as a flat brass disc and is hammered by hand until it curls in on itself - the fold is what holds the light. Hung as a cluster of three from one matte-black canopy, the shades sit at different drops so the light layers instead of flattening. No two petals fold the same way.',
+      fr: 'Chaque pétale part d’un disque de laiton plat, martelé à la main jusqu’à s’enrouler sur lui-même - c’est le pli qui retient la lumière. Suspendus en grappe de trois sous une même rosace noir mat, les abat-jour tombent à des hauteurs différentes pour superposer la lumière au lieu de l’aplatir. Aucun pétale ne se plie deux fois pareil.',
     },
     finishes: [
       { ...GOLD, images: img('lotus-cluster-pendant', [1, 2, 3, 4, 5, 6, 13]) },
@@ -142,7 +142,7 @@ export const PRODUCTS = [
       { k: { en: 'Canopy', fr: 'Rosace' }, v: { en: '30 cm, matte black', fr: '30 cm, noir mat' } },
       { k: { en: 'Drop', fr: 'Hauteur' }, v: { en: '150 cm, adjustable', fr: '150 cm, ajustable' } },
       { k: { en: 'Lights', fr: 'Points lumineux' }, v: { en: '3 × E27', fr: '3 × E27' } },
-      { k: { en: 'Voltage', fr: 'Tension' }, v: { en: '110–240 V', fr: '110–240 V' } },
+      { k: { en: 'Voltage', fr: 'Tension' }, v: { en: '110-240 V', fr: '110-240 V' } },
       { k: { en: 'Bulbs', fr: 'Ampoules' }, v: { en: 'Not included', fr: 'Non incluses' } },
     ],
   },
@@ -154,12 +154,12 @@ export const PRODUCTS = [
     badge: { en: 'Living patina', fr: 'Patine vivante' },
     name: { en: 'Atlas Verdigris Dome', fr: 'Dôme Atlas Verdigris' },
     tagline: {
-      en: 'Polished above, oxidised below — the line is never the same twice',
-      fr: 'Poli en haut, oxydé en bas — la ligne n’est jamais deux fois la même',
+      en: 'Polished above, oxidised below - the line is never the same twice',
+      fr: 'Poli en haut, oxydé en bas - la ligne n’est jamais deux fois la même',
     },
     description: {
-      en: 'The dome is spun, polished to a mirror, then half-buried in a patina bath. Where the two meet, the metal draws its own coastline — a ragged turquoise horizon no one can redraw on purpose. The inside stays bare so the bulb bounces gold, not green.',
-      fr: 'Le dôme est repoussé, poli miroir, puis à demi plongé dans un bain de patine. À la rencontre des deux, le métal dessine son propre littoral — un horizon turquoise déchiqueté que personne ne peut refaire à l’identique. L’intérieur reste nu pour que l’ampoule renvoie de l’or, pas du vert.',
+      en: 'The dome is spun, polished to a mirror, then half-buried in a patina bath. Where the two meet, the metal draws its own coastline - a ragged turquoise horizon no one can redraw on purpose. The inside stays bare so the bulb bounces gold, not green.',
+      fr: 'Le dôme est repoussé, poli miroir, puis à demi plongé dans un bain de patine. À la rencontre des deux, le métal dessine son propre littoral - un horizon turquoise déchiqueté que personne ne peut refaire à l’identique. L’intérieur reste nu pour que l’ampoule renvoie de l’or, pas du vert.',
     },
     finishes: [
       { ...GOLD, images: img('atlas-verdigris-dome-pendant', [1, 2, 3, 4, 5]) },
@@ -172,7 +172,7 @@ export const PRODUCTS = [
       { k: { en: 'Interior', fr: 'Intérieur' }, v: { en: 'Bare polished metal', fr: 'Métal poli nu' } },
       { k: { en: 'Drop', fr: 'Hauteur' }, v: { en: '150 cm, adjustable', fr: '150 cm, ajustable' } },
       { k: { en: 'Lights', fr: 'Points lumineux' }, v: { en: '1 × E27', fr: '1 × E27' } },
-      { k: { en: 'Voltage', fr: 'Tension' }, v: { en: '110–240 V', fr: '110–240 V' } },
+      { k: { en: 'Voltage', fr: 'Tension' }, v: { en: '110-240 V', fr: '110-240 V' } },
     ],
   },
   {
@@ -185,8 +185,8 @@ export const PRODUCTS = [
       fr: 'Un abat-jour bas et large qui pose la lumière sur la table',
     },
     description: {
-      en: 'Hammered flat and wide rather than deep, so the light falls in a broad circle instead of a spotlight. Sized for a round dining table — hang it 75–85 cm above the top and it lights the food, not the faces.',
-      fr: 'Martelé large et plat plutôt que profond, la lumière tombe en large cercle plutôt qu’en faisceau. Pensé pour une table ronde — suspendez-le à 75–85 cm du plateau et il éclaire les plats, pas les visages.',
+      en: 'Hammered flat and wide rather than deep, so the light falls in a broad circle instead of a spotlight. Sized for a round dining table - hang it 75-85 cm above the top and it lights the food, not the faces.',
+      fr: 'Martelé large et plat plutôt que profond, la lumière tombe en large cercle plutôt qu’en faisceau. Pensé pour une table ronde - suspendez-le à 75-85 cm du plateau et il éclaire les plats, pas les visages.',
     },
     finishes: [
       { ...OIL, images: img('sahara-wide-dome-pendant', [1, 2, 3, 4, 5]) },
@@ -234,8 +234,8 @@ export const PRODUCTS = [
       fr: 'Vagues ciselées qui projettent une ombre ondulée',
     },
     description: {
-      en: 'Every wave is punched through by hand with a chisel, one strike at a time. Lit, the shade stops being an object and becomes a projector — the wall behind it moves. Hung from a brass chain rather than cable.',
-      fr: 'Chaque vague est percée à la main au burin, coup par coup. Allumé, l’abat-jour cesse d’être un objet et devient un projecteur — le mur derrière lui s’anime. Suspendu par chaîne de laiton plutôt que par câble.',
+      en: 'Every wave is punched through by hand with a chisel, one strike at a time. Lit, the shade stops being an object and becomes a projector - the wall behind it moves. Hung from a brass chain rather than cable.',
+      fr: 'Chaque vague est percée à la main au burin, coup par coup. Allumé, l’abat-jour cesse d’être un objet et devient un projecteur - le mur derrière lui s’anime. Suspendu par chaîne de laiton plutôt que par câble.',
     },
     finishes: [{ ...GOLD, images: img('oasis-wave-pendant', [1, 2, 3, 4, 5]) }],
     sizes: LAMP_SIZES,
@@ -276,8 +276,8 @@ export const PRODUCTS = [
       fr: 'Verre serti de plomb dans une cage de laiton facettée',
     },
     description: {
-      en: 'Frosted and green glass set panel by panel into a soldered brass frame, the way the lanterns in the old medina workshops are still made. Softer light than pierced metal — it glows rather than patterns.',
-      fr: 'Verre dépoli et vert serti panneau par panneau dans une armature de laiton soudée, comme on fabrique encore les lanternes dans les ateliers de la vieille médina. Lumière plus douce que le métal ajouré — elle diffuse au lieu de dessiner.',
+      en: 'Frosted and green glass set panel by panel into a soldered brass frame, the way the lanterns in the old medina workshops are still made. Softer light than pierced metal - it glows rather than patterns.',
+      fr: 'Verre dépoli et vert serti panneau par panneau dans une armature de laiton soudée, comme on fabrique encore les lanternes dans les ateliers de la vieille médina. Lumière plus douce que le métal ajouré - elle diffuse au lieu de dessiner.',
     },
     finishes: [{ ...OIL, images: img('andalus-glass-lantern', [1, 2, 3, 4, 5]) }],
     sizes: LAMP_SIZES,
@@ -300,8 +300,8 @@ export const PRODUCTS = [
       fr: 'Rosaces découpées à la main, projetées sur tout le plafond',
     },
     description: {
-      en: 'A lobed flush-mount pierced with concentric rosettes. Because it sits tight to the ceiling, the pattern spreads wide instead of dropping — corridors, entrances, bathrooms and any room where a pendant would be in the way.',
-      fr: 'Un plafonnier lobé, ajouré de rosaces concentriques. Plaqué au plafond, le motif s’étale au lieu de tomber — couloirs, entrées, salles de bain, et toute pièce où une suspension gênerait.',
+      en: 'A lobed flush-mount pierced with concentric rosettes. Because it sits tight to the ceiling, the pattern spreads wide instead of dropping - corridors, entrances, bathrooms and any room where a pendant would be in the way.',
+      fr: 'Un plafonnier lobé, ajouré de rosaces concentriques. Plaqué au plafond, le motif s’étale au lieu de tomber - couloirs, entrées, salles de bain, et toute pièce où une suspension gênerait.',
     },
     finishes: [{ ...OIL, images: img('riad-flush-ceiling-light', [1, 2, 3, 4, 5]) }],
     sizes: LAMP_SIZES,
@@ -325,8 +325,8 @@ export const PRODUCTS = [
       fr: 'Une feuille, un pli, oxydée d’elle-même',
     },
     description: {
-      en: 'A single sheet of copper rolled into a curve at the bottom, with a bare brass socket standing in the trough. The turquoise-and-rust surface is not paint — it is the metal reacting, and it carries on moving for months after it is on your wall. Indoor or covered outdoor.',
-      fr: 'Une seule feuille de cuivre roulée en courbe à sa base, avec une douille en laiton nu posée dans le creux. La surface turquoise et rouille n’est pas une peinture — c’est le métal qui réagit, et il continue d’évoluer des mois après sa pose. Intérieur ou extérieur abrité.',
+      en: 'A single sheet of copper rolled into a curve at the bottom, with a bare brass socket standing in the trough. The turquoise-and-rust surface is not paint - it is the metal reacting, and it carries on moving for months after it is on your wall. Indoor or covered outdoor.',
+      fr: 'Une seule feuille de cuivre roulée en courbe à sa base, avec une douille en laiton nu posée dans le creux. La surface turquoise et rouille n’est pas une peinture - c’est le métal qui réagit, et il continue d’évoluer des mois après sa pose. Intérieur ou extérieur abrité.',
     },
     finishes: [{ ...VERDIGRIS, images: img('cascade-wall-sconce', [1, 2, 3, 4, 5, 6, 7, 8, 9]) }],
     price: 148,
@@ -352,8 +352,8 @@ export const PRODUCTS = [
       fr: 'Quarante-deux cannelures, formées d’un seul disque',
     },
     description: {
-      en: 'Every flute is beaten into the metal from underneath, working outward from the drain — which is why the ribs meet at the centre instead of being stamped in a press. Oval or round, brass or two-tone copper and brass. The scalloped rim sits proud of the counter.',
-      fr: 'Chaque cannelure est repoussée par en dessous, du bonde vers l’extérieur — c’est pour cela que les nervures se rejoignent au centre au lieu d’être estampées à la presse. Ovale ou ronde, en laiton ou bicolore cuivre et laiton. Le bord festonné dépasse du plan.',
+      en: 'Every flute is beaten into the metal from underneath, working outward from the drain - which is why the ribs meet at the centre instead of being stamped in a press. Oval or round, brass or two-tone copper and brass. The scalloped rim sits proud of the counter.',
+      fr: 'Chaque cannelure est repoussée par en dessous, du bonde vers l’extérieur - c’est pour cela que les nervures se rejoignent au centre au lieu d’être estampées à la presse. Ovale ou ronde, en laiton ou bicolore cuivre et laiton. Le bord festonné dépasse du plan.',
     },
     finishes: [
       { ...GOLD, images: img('zahra-fluted-basin', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) },
@@ -378,8 +378,8 @@ export const PRODUCTS = [
       fr: 'Une tresse ciselée tout autour de la paroi',
     },
     description: {
-      en: 'A deep straight-sided bowl with an interlace band chased around the outside — the same knot the old Marrakech engravers cut into tea trays. Inside stays smooth and hammered so it cleans in one wipe.',
-      fr: 'Une cuve profonde à parois droites, avec une tresse ciselée tout autour — le même entrelacs que les graveurs de Marrakech taillent sur les plateaux à thé. L’intérieur reste lisse et martelé, il se nettoie d’un geste.',
+      en: 'A deep straight-sided bowl with an interlace band chased around the outside - the same knot the old Marrakech engravers cut into tea trays. Inside stays smooth and hammered so it cleans in one wipe.',
+      fr: 'Une cuve profonde à parois droites, avec une tresse ciselée tout autour - le même entrelacs que les graveurs de Marrakech taillent sur les plateaux à thé. L’intérieur reste lisse et martelé, il se nettoie d’un geste.',
     },
     finishes: [
       { ...GOLD, images: img('medina-engraved-basin', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]) },
@@ -398,8 +398,8 @@ export const PRODUCTS = [
     name: { en: 'Atlas Oval Basin', fr: 'Vasque Ovale Atlas' },
     tagline: { en: 'Plain, deep, and entirely hammered', fr: 'Simple, profonde, entièrement martelée' },
     description: {
-      en: 'No engraving, no flutes — just the hammer marks left where they fell. The quietest piece in the catalogue and the one that suits a rough wood or stone counter best.',
-      fr: 'Ni gravure ni cannelure — seulement les marques du marteau, laissées telles quelles. La pièce la plus sobre du catalogue, et celle qui va le mieux sur un plan en bois brut ou en pierre.',
+      en: 'No engraving, no flutes - just the hammer marks left where they fell. The quietest piece in the catalogue and the one that suits a rough wood or stone counter best.',
+      fr: 'Ni gravure ni cannelure - seulement les marques du marteau, laissées telles quelles. La pièce la plus sobre du catalogue, et celle qui va le mieux sur un plan en bois brut ou en pierre.',
     },
     finishes: [{ ...OIL, images: img('atlas-oval-basin', [1, 2, 3]) }],
     priceOnRequest: true,
@@ -418,8 +418,8 @@ export const PRODUCTS = [
     name: { en: 'Medallion Farmhouse Sink', fr: 'Évier de Ferme Médaillon' },
     tagline: { en: 'Apron front, single medallion, sixteen-gauge copper', fr: 'Tablier, médaillon central, cuivre 16 gauge' },
     description: {
-      en: 'A full apron-front sink with a chased rosette at the centre of the panel. Heavy-gauge copper, so it holds heat and takes a knock without denting. Copper is naturally antimicrobial — this is the one surface in a kitchen that gets more hygienic the longer you use it.',
-      fr: 'Un évier à tablier complet, avec une rosace ciselée au centre du panneau. Cuivre fort, qui garde la chaleur et encaisse les chocs sans se marquer. Le cuivre est naturellement antimicrobien — c’est la seule surface de la cuisine qui devient plus saine à l’usage.',
+      en: 'A full apron-front sink with a chased rosette at the centre of the panel. Heavy-gauge copper, so it holds heat and takes a knock without denting. Copper is naturally antimicrobial - this is the one surface in a kitchen that gets more hygienic the longer you use it.',
+      fr: 'Un évier à tablier complet, avec une rosace ciselée au centre du panneau. Cuivre fort, qui garde la chaleur et encaisse les chocs sans se marquer. Le cuivre est naturellement antimicrobien - c’est la seule surface de la cuisine qui devient plus saine à l’usage.',
     },
     finishes: [{ ...OIL, images: img('medallion-farmhouse-sink-copper', [1, 2, 3, 4, 5, 6, 7, 8]) }],
     priceOnRequest: true,
@@ -434,11 +434,11 @@ export const PRODUCTS = [
     slug: 'medallion-farmhouse-sink-brass',
     category: 'kitchen-sinks',
     sku: 'CA-MFB',
-    name: { en: 'Medallion Farmhouse Sink — Brass', fr: 'Évier de Ferme Médaillon — Laiton' },
+    name: { en: 'Medallion Farmhouse Sink - Brass', fr: 'Évier de Ferme Médaillon - Laiton' },
     tagline: { en: 'The same sink, raised in brass', fr: 'Le même évier, formé en laiton' },
     description: {
-      en: 'The medallion sink built in hammered brass instead of copper — brighter, harder, and it holds its colour longer in a hard-water kitchen.',
-      fr: 'L’évier médaillon réalisé en laiton martelé plutôt qu’en cuivre — plus clair, plus dur, et il garde sa couleur plus longtemps en eau calcaire.',
+      en: 'The medallion sink built in hammered brass instead of copper - brighter, harder, and it holds its colour longer in a hard-water kitchen.',
+      fr: 'L’évier médaillon réalisé en laiton martelé plutôt qu’en cuivre - plus clair, plus dur, et il garde sa couleur plus longtemps en eau calcaire.',
     },
     finishes: [{ ...GOLD, images: img('medallion-farmhouse-sink-brass', [1, 2, 3]) }],
     priceOnRequest: true,
@@ -463,7 +463,7 @@ export const PRODUCTS = [
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Engraved copper', fr: 'Cuivre gravé' } },
       { k: { en: 'Front', fr: 'Façade' }, v: { en: 'Curved apron', fr: 'Tablier galbé' } },
-      { k: { en: 'Lead time', fr: 'Délai' }, v: { en: '4–6 weeks', fr: '4–6 semaines' } },
+      { k: { en: 'Lead time', fr: 'Délai' }, v: { en: '4-6 weeks', fr: '4-6 semaines' } },
     ],
   },
   {
@@ -494,8 +494,8 @@ export const PRODUCTS = [
     name: { en: 'Marrakech Undermount Sink', fr: 'Évier Sous-Plan Marrakech' },
     tagline: { en: 'A plain deep bowl for a marble counter', fr: 'Une cuve profonde et sobre pour un plan en marbre' },
     description: {
-      en: 'No apron, no medallion — a deep hammered bowl set under stone. Round or rectangular. The one to specify when the counter is meant to be the star and the sink just has to be beautiful quietly.',
-      fr: 'Ni tablier ni médaillon — une cuve profonde martelée, posée sous la pierre. Ronde ou rectangulaire. Celle qu’on choisit quand c’est le plan qui doit primer et que l’évier doit être beau sans se faire remarquer.',
+      en: 'No apron, no medallion - a deep hammered bowl set under stone. Round or rectangular. The one to specify when the counter is meant to be the star and the sink just has to be beautiful quietly.',
+      fr: 'Ni tablier ni médaillon - une cuve profonde martelée, posée sous la pierre. Ronde ou rectangulaire. Celle qu’on choisit quand c’est le plan qui doit primer et que l’évier doit être beau sans se faire remarquer.',
     },
     finishes: [
       { ...GOLD, images: img('marrakech-bridge-sink', [3, 4, 5]) },
@@ -517,8 +517,8 @@ export const PRODUCTS = [
     name: { en: 'Hammam Bath Bowl', fr: 'Bassine de Hammam' },
     tagline: { en: 'A wide, shallow bowl for the foot-bath ritual', fr: 'Une bassine large et basse pour le bain de pieds' },
     description: {
-      en: 'The wide, low copper bowl used in Moroccan bathhouses — big enough for both feet, shallow enough to carry full. Copper holds heat far longer than steel or ceramic, which is the entire point of it.',
-      fr: 'La bassine en cuivre large et basse des hammams marocains — assez grande pour les deux pieds, assez basse pour être portée pleine. Le cuivre garde la chaleur bien plus longtemps que l’acier ou la céramique — c’est tout l’intérêt.',
+      en: 'The wide, low copper bowl used in Moroccan bathhouses - big enough for both feet, shallow enough to carry full. Copper holds heat far longer than steel or ceramic, which is the entire point of it.',
+      fr: 'La bassine en cuivre large et basse des hammams marocains - assez grande pour les deux pieds, assez basse pour être portée pleine. Le cuivre garde la chaleur bien plus longtemps que l’acier ou la céramique - c’est tout l’intérêt.',
     },
     finishes: [{ ...OIL, images: img('hammam-bath-bowl', [1, 2, 3, 4]) }],
     priceOnRequest: true,
@@ -535,8 +535,8 @@ export const PRODUCTS = [
     name: { en: 'Brass Tumbler Holder', fr: 'Porte-Gobelet Laiton' },
     tagline: { en: 'Wall-mounted, solid, no plating', fr: 'Mural, massif, sans placage' },
     description: {
-      en: 'Solid brass throughout — not plated steel, so it will never blister or flake in a wet room. Ages to a soft gold. Sold with the tumbler.',
-      fr: 'Laiton massif de part en part — pas d’acier plaqué, donc ni cloque ni écaille en pièce humide. Prend une patine dorée douce. Vendu avec le gobelet.',
+      en: 'Solid brass throughout - not plated steel, so it will never blister or flake in a wet room. Ages to a soft gold. Sold with the tumbler.',
+      fr: 'Laiton massif de part en part - pas d’acier plaqué, donc ni cloque ni écaille en pièce humide. Prend une patine dorée douce. Vendu avec le gobelet.',
     },
     finishes: [{ ...GOLD, images: img('brass-tumbler-holder', [1]) }],
     priceOnRequest: true,

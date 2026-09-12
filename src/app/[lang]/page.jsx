@@ -45,8 +45,8 @@ export default async function HomePage({ params }) {
         title={lang === 'fr' ? 'Toute la lumière' : 'Every light we make'}
         lead={
           lang === 'fr'
-            ? 'Suspensions, plafonniers et appliques — six tailles, de 25 à 50 cm.'
-            : 'Pendants, ceiling lights and sconces — six diameters, 25 to 50 cm.'
+            ? 'Suspensions, plafonniers et appliques - six tailles, de 25 à 50 cm.'
+            : 'Pendants, ceiling lights and sconces - six diameters, 25 to 50 cm.'
         }
         href={`/${lang}/collections/pendant-lights`}
         cta={d.viewAll}

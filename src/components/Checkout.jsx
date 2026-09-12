@@ -22,12 +22,12 @@ export default function Checkout({ lang }) {
     const lines = items
       .map(
         (l) =>
-          `• ${l.name} — ${l.finishName}${l.size ? `, ${l.size}cm` : ''} × ${l.qty}` +
-          (l.price == null ? ' (price on request)' : ` — ${money(l.price * l.qty)}`)
+          `• ${l.name} - ${l.finishName}${l.size ? `, ${l.size}cm` : ''} × ${l.qty}` +
+          (l.price == null ? ' (price on request)' : ` - ${money(l.price * l.qty)}`)
       )
       .join('\n');
     return (
-      `${lang === 'fr' ? 'NOUVELLE COMMANDE' : 'NEW ORDER'} — ${SHOP.name}\n\n${lines}\n\n` +
+      `${lang === 'fr' ? 'NOUVELLE COMMANDE' : 'NEW ORDER'} - ${SHOP.name}\n\n${lines}\n\n` +
       `${d.subtotal}: ${money(subtotal)}${hasQuoteOnly ? ' (+ quote-only items)' : ''}\n\n` +
       `${form.name}\n${form.email}\n${form.phone}\n${form.address}, ${form.city}, ${form.country}\n` +
       (form.notes ? `\n${d.notes}: ${form.notes}` : '')
@@ -118,8 +118,8 @@ export default function Checkout({ lang }) {
             <p className="mt-4 rounded-2xl px-4 py-3 text-[13px]"
               style={{ background: 'rgba(200,90,60,0.14)', border: '1px solid rgba(200,90,60,0.4)' }}>
               {lang === 'fr'
-                ? 'L’envoi automatique a échoué. Utilisez WhatsApp ci-dessous — la commande y est déjà rédigée.'
-                : 'Automatic send failed. Use WhatsApp below — the order is already written out for you.'}
+                ? 'L’envoi automatique a échoué. Utilisez WhatsApp ci-dessous - la commande y est déjà rédigée.'
+                : 'Automatic send failed. Use WhatsApp below - the order is already written out for you.'}
             </p>
           )}
 

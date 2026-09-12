@@ -28,7 +28,7 @@ export const DICT = {
 
     /* announcement */
     announce: [
-      'Hand-hammered in Marrakech — never machine-pressed',
+      'Hand-hammered in Marrakech - never machine-pressed',
       'Worldwide shipping, tracked & insured',
       'Every piece made to order by one artisan',
       'Free shipping on orders over $400',
@@ -38,7 +38,7 @@ export const DICT = {
     heroEyebrow: 'Marrakech · Since the old medina',
     heroTitle: 'Light, beaten\nout of raw metal',
     heroLead:
-      'Copper Atlas Design is a Marrakech workshop raising lighting and basins from flat sheets of copper and brass — one hammer, one artisan, one piece at a time.',
+      'Copper Atlas Design is a Marrakech workshop raising lighting and basins from flat sheets of copper and brass - one hammer, one artisan, one piece at a time.',
     heroCta: 'Explore the collection',
     heroCta2: 'Watch it being made',
     scroll: 'Scroll',
@@ -57,7 +57,7 @@ export const DICT = {
       { n: '01', t: 'The flat disc', d: 'Every piece starts as a plain sheet of copper or brass, cut to a circle by hand.' },
       { n: '02', t: 'The raising', d: 'Thousands of hammer strikes drive the metal into shape from the centre outward. Hours per shade.' },
       { n: '03', t: 'The finish', d: 'Polished to a mirror, taken down to near-black, or dropped into a patina bath and left to react.' },
-      { n: '04', t: 'The wiring', d: 'Solid brass E27 socket, adjustable black cable, matte black canopy, 110–240 V. Ready to hang.' },
+      { n: '04', t: 'The wiring', d: 'Solid brass E27 socket, adjustable black cable, matte black canopy, 110-240 V. Ready to hang.' },
     ],
 
     finishTitle: 'Two finishes, two entirely different rooms',
@@ -74,7 +74,7 @@ export const DICT = {
 
     storyTitle: 'From a bench in the medina',
     storyLead:
-      'Tarik El Ouirgani has worked copper in Marrakech for over twenty years. Copper Atlas Design is his workshop — the same hand that beats the metal answers the messages.',
+      'Tarik El Ouirgani has worked copper in Marrakech for over twenty years. Copper Atlas Design is his workshop - the same hand that beats the metal answers the messages.',
     storyCta: 'Read the story',
 
     /* listing */
@@ -100,7 +100,7 @@ export const DICT = {
     addToCart: 'Add to cart',
     added: 'Added',
     adding: 'Adding…',
-    inStock: 'Made to order · ships in 2–3 weeks',
+    inStock: 'Made to order · ships in 2-3 weeks',
     sizeGuide: 'Which size?',
     specifications: 'Specifications',
     included: 'What arrives',
@@ -112,10 +112,10 @@ export const DICT = {
     ],
     shippingTitle: 'Shipping & returns',
     shippingBody:
-      'Made to order in Marrakech and shipped worldwide by DHL or FedEx, tracked and insured. Production takes 2–3 weeks, delivery a further 3–6 working days. Import duties are not included and are payable on delivery. 14-day returns on unused pieces.',
+      'Made to order in Marrakech and shipped worldwide by DHL or FedEx, tracked and insured. Production takes 2-3 weeks, delivery a further 3-6 working days. Import duties are not included and are payable on delivery. 14-day returns on unused pieces.',
     careTitle: 'Living with copper',
     careBody:
-      'Copper and brass are alive. Left alone they deepen; wiped with a soft cloth they stay bright. Never use an abrasive or an acid cleaner. Patina finishes will keep shifting for months — that is the material working, not a fault.',
+      'Copper and brass are alive. Left alone they deepen; wiped with a soft cloth they stay bright. Never use an abrasive or an acid cleaner. Patina finishes will keep shifting for months - that is the material working, not a fault.',
     askTitle: 'Not sure it fits?',
     askBody: 'Send the room measurements and a photo. You get an answer from the workshop, usually same day.',
     askCta: 'Ask about this piece',
@@ -197,7 +197,7 @@ export const DICT = {
     currency: 'USD',
 
     announce: [
-      'Martelé main à Marrakech — jamais pressé à la machine',
+      'Martelé main à Marrakech - jamais pressé à la machine',
       'Livraison mondiale, suivie et assurée',
       'Chaque pièce façonnée à la commande par un seul artisan',
       'Livraison offerte dès 400 $',
@@ -206,7 +206,7 @@ export const DICT = {
     heroEyebrow: 'Marrakech · Depuis la vieille médina',
     heroTitle: 'La lumière,\nmartelée dans le métal',
     heroLead:
-      'Copper Atlas Design est un atelier de Marrakech qui façonne luminaires et vasques à partir de feuilles de cuivre et de laiton — un marteau, un artisan, une pièce à la fois.',
+      'Copper Atlas Design est un atelier de Marrakech qui façonne luminaires et vasques à partir de feuilles de cuivre et de laiton - un marteau, un artisan, une pièce à la fois.',
     heroCta: 'Découvrir la collection',
     heroCta2: 'Voir la fabrication',
     scroll: 'Défiler',
@@ -225,7 +225,7 @@ export const DICT = {
       { n: '01', t: 'Le disque plat', d: 'Chaque pièce commence par une simple feuille de cuivre ou de laiton, découpée en cercle à la main.' },
       { n: '02', t: 'La levée', d: 'Des milliers de coups de marteau font monter le métal, du centre vers l’extérieur. Des heures par abat-jour.' },
       { n: '03', t: 'La finition', d: 'Poli miroir, poussé presque au noir, ou plongé dans un bain de patine et laissé libre de réagir.' },
-      { n: '04', t: 'Le câblage', d: 'Douille laiton massif E27, câble noir ajustable, rosace noir mat, 110–240 V. Prêt à poser.' },
+      { n: '04', t: 'Le câblage', d: 'Douille laiton massif E27, câble noir ajustable, rosace noir mat, 110-240 V. Prêt à poser.' },
     ],
 
     finishTitle: 'Deux finitions, deux pièces entièrement différentes',
@@ -242,7 +242,7 @@ export const DICT = {
 
     storyTitle: 'Depuis un établi de la médina',
     storyLead:
-      'Tarik El Ouirgani travaille le cuivre à Marrakech depuis plus de vingt ans. Copper Atlas Design est son atelier — la main qui bat le métal est celle qui répond aux messages.',
+      'Tarik El Ouirgani travaille le cuivre à Marrakech depuis plus de vingt ans. Copper Atlas Design est son atelier - la main qui bat le métal est celle qui répond aux messages.',
     storyCta: 'Lire l’histoire',
 
     filterFinish: 'Finition',
@@ -266,7 +266,7 @@ export const DICT = {
     addToCart: 'Ajouter au panier',
     added: 'Ajouté',
     adding: 'Ajout…',
-    inStock: 'Fait à la commande · expédié sous 2–3 semaines',
+    inStock: 'Fait à la commande · expédié sous 2-3 semaines',
     sizeGuide: 'Quelle taille ?',
     specifications: 'Caractéristiques',
     included: 'Ce que vous recevez',
@@ -278,10 +278,10 @@ export const DICT = {
     ],
     shippingTitle: 'Livraison & retours',
     shippingBody:
-      'Fabriqué à la commande à Marrakech et expédié dans le monde entier par DHL ou FedEx, suivi et assuré. Comptez 2–3 semaines de fabrication, puis 3–6 jours ouvrés de livraison. Droits de douane non inclus, payables à la livraison. Retours sous 14 jours sur pièce non utilisée.',
+      'Fabriqué à la commande à Marrakech et expédié dans le monde entier par DHL ou FedEx, suivi et assuré. Comptez 2-3 semaines de fabrication, puis 3-6 jours ouvrés de livraison. Droits de douane non inclus, payables à la livraison. Retours sous 14 jours sur pièce non utilisée.',
     careTitle: 'Vivre avec le cuivre',
     careBody:
-      'Le cuivre et le laiton sont vivants. Laissés tranquilles, ils foncent ; essuyés au chiffon doux, ils restent clairs. Jamais d’abrasif ni de nettoyant acide. Les patines continuent d’évoluer des mois durant — c’est la matière qui travaille, pas un défaut.',
+      'Le cuivre et le laiton sont vivants. Laissés tranquilles, ils foncent ; essuyés au chiffon doux, ils restent clairs. Jamais d’abrasif ni de nettoyant acide. Les patines continuent d’évoluer des mois durant - c’est la matière qui travaille, pas un défaut.',
     askTitle: 'Un doute sur les dimensions ?',
     askBody: 'Envoyez les mesures de la pièce et une photo. L’atelier répond, généralement le jour même.',
     askCta: 'Poser une question',

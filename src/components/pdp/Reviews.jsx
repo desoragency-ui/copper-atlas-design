@@ -27,8 +27,8 @@ export default function Reviews({ slug, productName, lang }) {
 
   const askText =
     lang === 'fr'
-      ? `Bonjour — j’ai acheté « ${productName} » et j’aimerais laisser un avis.`
-      : `Hello — I bought the ${productName} and I'd like to leave a review.`;
+      ? `Bonjour - j’ai acheté « ${productName} » et j’aimerais laisser un avis.`
+      : `Hello - I bought the ${productName} and I'd like to leave a review.`;
 
   return (
     <section id="reviews" className="scroll-mt-28 border-t py-20 edge md:py-28">
@@ -49,7 +49,7 @@ export default function Reviews({ slug, productName, lang }) {
           style={{ background: 'rgba(224,169,109,0.1)', border: '1px solid rgba(224,169,109,0.4)', color: 'var(--brass)' }}
           role="status"
         >
-          <strong className="uppercase tracking-wide2">Demo data</strong> — sample reviews are switched on via
+          <strong className="uppercase tracking-wide2">Demo data</strong> - sample reviews are switched on via
           <code className="mx-1 rounded bg-black/25 px-1.5 py-0.5">NEXT_PUBLIC_DEMO_REVIEWS</code>
           for layout preview only. Remove the flag before this store goes live.
         </div>
@@ -117,7 +117,7 @@ export default function Reviews({ slug, productName, lang }) {
                     ['low', d.lowestRated],
                     ['helpful', d.mostHelpful],
                   ].map(([v, l]) => (
-                    <option key={v} value={v} style={{ background: '#0E2B24' }}>{l}</option>
+                    <option key={v} value={v} style={{ background: '#0e2b24' }}>{l}</option>
                   ))}
                 </select>
               </label>

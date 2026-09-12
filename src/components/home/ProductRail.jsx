@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import ProductCard from '../ProductCard';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from '../Icons';
 
-/** Horizontal snap rail with real overflow scrolling — keyboard and touch safe. */
+/** Horizontal snap rail with real overflow scrolling - keyboard and touch safe. */
 export default function ProductRail({ lang, products, eyebrow, title, lead, href, cta }) {
   const ref = useRef(null);
   const [edge, setEdge] = useState({ start: true, end: false });
@@ -41,7 +41,6 @@ export default function ProductRail({ lang, products, eyebrow, title, lead, href
     <section className="py-24 md:py-32">
       <div className="mx-auto mb-12 flex max-w-[1320px] flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between md:px-10">
         <div>
-          {eyebrow && <p className="eyebrow mb-6">{eyebrow}</p>}
           <h2 className="max-w-2xl font-display text-[clamp(34px,5.2vw,62px)] leading-[1.02] text-balance">
             {title}
           </h2>

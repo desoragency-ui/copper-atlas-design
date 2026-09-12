@@ -49,7 +49,7 @@ export default function Footer({ lang }) {
             <Wordmark />
             <p className="mt-6 max-w-xs text-[14px] leading-relaxed opacity-60">{d.handmade}</p>
             <a
-              href={waLink('Hello Copper Atlas — I have a question.')}
+              href={waLink('Hello Copper Atlas - I have a question.')}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-ghost group/btn mt-7"

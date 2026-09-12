@@ -4,7 +4,7 @@ export const SHOP = {
   city: 'Marrakech',
   country: 'Morocco',
   email: 'hello@copperatlasdesign.com',
-  // E.164, digits only — used to build the wa.me link.
+  // E.164, digits only - used to build the wa.me link.
   whatsapp: '212600000000',
   instagram: 'https://instagram.com/copperatlasdesign',
   facebook: 'https://www.facebook.com/profile.php?id=100063544693929',

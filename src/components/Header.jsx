@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Wordmark } from './Logo';
-import { Bag, Globe, ArrowUpRight } from './Icons';
+import { Bag, ArrowUpRight } from './Icons';
 import { useCart } from '@/lib/cart';
 import { dict, t } from '@/lib/i18n';
 import { CATEGORIES } from '@/data/products';
@@ -15,23 +15,16 @@ export default function Header({ lang }) {
   const { count, setOpen: setCartOpen } = useCart();
   const [menu, setMenu] = useState(false);
   const [lifted, setLifted] = useState(false);
+  const sentinel = useRef(null);
 
-  // rAF-throttled so we never read layout on every scroll event
+  /* Scroll state via IntersectionObserver, not a scroll listener - a listener
+     fires on every frame and is the usual cause of a janky sticky header. */
   useEffect(() => {
-    let frame = 0;
-    const onScroll = () => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        setLifted(window.scrollY > 28);
-        frame = 0;
-      });
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
+    const el = sentinel.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([e]) => setLifted(!e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => setMenu(false), [path]);
@@ -47,12 +40,11 @@ export default function Header({ lang }) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const other = lang === 'en' ? 'fr' : 'en';
-  const otherHref = path?.replace(/^\/(en|fr)/, `/${other}`) || `/${other}`;
+  const swap = (to) => path?.replace(/^\/(en|fr)/, `/${to}`) || `/${to}`;
 
   const nav = [
     { href: `/${lang}/collections`, label: d.shop },
-    { href: `/${lang}/guides`, label: lang === 'fr' ? 'Guides' : 'Guides' },
+    { href: `/${lang}/guides`, label: 'Guides' },
     { href: `/${lang}/workshop`, label: d.workshop },
     { href: `/${lang}/trade`, label: d.trade },
     { href: `/${lang}/contact`, label: d.contact },
@@ -60,30 +52,42 @@ export default function Header({ lang }) {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-6 md:pt-5">
+      {/* watched by the observer above; sits just under the announcement strip */}
+      <div ref={sentinel} aria-hidden className="absolute left-0 h-px w-px" style={{ top: 'var(--announce-h)' }} />
+
+      <header
+        className="fixed inset-x-0 z-40 px-3 md:px-6"
+        style={{ top: 'var(--announce-h)', paddingTop: '10px' }}
+      >
         <div
-          className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 rounded-full px-3 py-2 transition-all duration-700 ease-atlas md:px-4"
+          className="mx-auto flex max-w-[1320px] items-center justify-between gap-4 rounded-full px-3 transition-all duration-700 ease-atlas md:px-4"
           style={{
-            background: lifted ? 'rgba(8,26,22,0.72)' : 'rgba(8,26,22,0.28)',
-            backdropFilter: 'blur(22px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(22px) saturate(150%)',
-            border: `1px solid ${lifted ? 'rgba(242,234,223,0.14)' : 'rgba(242,234,223,0.07)'}`,
-            boxShadow: lifted ? '0 24px 60px -32px rgba(0,0,0,0.9)' : 'none',
+            height: 'var(--nav-h)',
+            background: lifted
+              ? 'linear-gradient(180deg, rgba(8,26,22,0.86), rgba(8,26,22,0.74))'
+              : 'linear-gradient(180deg, rgba(8,26,22,0.42), rgba(8,26,22,0.24))',
+            backdropFilter: 'blur(26px) saturate(155%)',
+            WebkitBackdropFilter: 'blur(26px) saturate(155%)',
+            border: `1px solid ${lifted ? 'rgba(224,169,109,0.26)' : 'rgba(242,234,223,0.09)'}`,
+            boxShadow: lifted
+              ? '0 26px 64px -34px rgba(0,0,0,0.92), inset 0 1px 0 rgba(242,234,223,0.1)'
+              : 'inset 0 1px 0 rgba(242,234,223,0.06)',
           }}
         >
-          <Link href={`/${lang}`} className="shrink-0 pl-1" aria-label="Copper Atlas Design — home">
+          <Link href={`/${lang}`} className="shrink-0 pl-1" aria-label="Copper Atlas Design, home">
             <Wordmark compact />
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
             {nav.map((n) => {
               const active = path?.startsWith(n.href);
               return (
                 <Link
                   key={n.href}
                   href={n.href}
-                  className="link-underline text-[12px] uppercase tracking-wide2 transition-colors duration-400 ease-atlas"
-                  style={{ color: active ? 'var(--brass)' : 'rgba(242,234,223,0.82)' }}
+                  aria-current={active ? 'page' : undefined}
+                  className="link-underline text-[11.5px] uppercase tracking-wide2 transition-colors duration-400 ease-atlas"
+                  style={{ color: active ? 'var(--brass)' : 'rgba(242,234,223,0.84)' }}
                 >
                   {n.label}
                 </Link>
@@ -92,26 +96,45 @@ export default function Header({ lang }) {
           </nav>
 
           <div className="flex items-center gap-1.5">
-            <Link
-              href={otherHref}
-              hrefLang={other}
-              className="hidden items-center gap-1.5 rounded-full px-3 py-2 text-[11px] uppercase tracking-wide2 transition-colors duration-400 hover:bg-white/10 sm:flex"
-              style={{ color: 'rgba(242,234,223,0.72)' }}
-              aria-label={other === 'fr' ? 'Passer en français' : 'Switch to English'}
+            {/* Both locales shown with the active one lit, so it reads as a state,
+                not as an instruction. The previous single-chip version showed the
+                language you would switch TO, which read backwards. */}
+            <div
+              className="hidden items-center rounded-full p-[3px] sm:flex"
+              style={{ background: 'rgba(8,26,22,0.5)', border: '1px solid var(--edge)' }}
+              role="group"
+              aria-label="Language"
             >
-              <Globe className="h-4 w-4" />
-              {other.toUpperCase()}
-            </Link>
+              {['en', 'fr'].map((l) => {
+                const on = l === lang;
+                return (
+                  <Link
+                    key={l}
+                    href={swap(l)}
+                    hrefLang={l}
+                    aria-current={on ? 'true' : undefined}
+                    className="rounded-full px-3 py-1.5 text-[10.5px] uppercase tracking-wide2 transition-all duration-400 ease-atlas"
+                    style={{
+                      background: on ? 'var(--brass)' : 'transparent',
+                      color: on ? 'var(--ink)' : 'rgba(242,234,223,0.6)',
+                      fontWeight: on ? 500 : 400,
+                    }}
+                  >
+                    {l}
+                  </Link>
+                );
+              })}
+            </div>
 
             <button
               onClick={() => setCartOpen(true)}
               className="relative grid h-11 w-11 place-items-center rounded-full transition-all duration-400 hover:bg-white/10 active:scale-95"
-              aria-label={`${d.cart} (${count})`}
+              aria-label={`${d.cart}, ${count}`}
             >
               <Bag className="h-[19px] w-[19px]" />
               {count > 0 && (
                 <span
-                  className="tabular absolute -right-0 -top-0 grid h-[19px] min-w-[19px] place-items-center rounded-full px-1 text-[10px] font-medium"
+                  className="tabular absolute right-0 top-0 grid h-[19px] min-w-[19px] place-items-center rounded-full px-1 text-[10px] font-medium"
                   style={{ background: 'var(--brass)', color: 'var(--ink)' }}
                 >
                   {count}
@@ -119,7 +142,6 @@ export default function Header({ lang }) {
               )}
             </button>
 
-            {/* hamburger → X morph */}
             <button
               onClick={() => setMenu((v) => !v)}
               className="relative grid h-11 w-11 place-items-center rounded-full transition-all duration-400 hover:bg-white/10 active:scale-95 lg:hidden"
@@ -152,19 +174,19 @@ export default function Header({ lang }) {
           pointerEvents: menu ? 'auto' : 'none',
           opacity: menu ? 1 : 0,
           transition: 'opacity 600ms cubic-bezier(0.32,0.72,0,1)',
-          background: 'rgba(8,26,22,0.93)',
+          background: 'linear-gradient(160deg, rgba(8,26,22,0.96), rgba(14,43,36,0.96))',
           backdropFilter: 'blur(30px)',
           WebkitBackdropFilter: 'blur(30px)',
         }}
         aria-hidden={!menu}
       >
         <div className="flex h-full flex-col justify-between px-6 pb-10 pt-32">
-          <nav className="flex flex-col gap-1" aria-label="Mobile">
-            {[...nav, { href: `/${lang}/faq`, label: d.faq }].map((n, i) => (
+          <nav className="flex flex-col" aria-label="Mobile">
+            {nav.map((n, i) => (
               <Link
                 key={n.href}
                 href={n.href}
-                className="group/btn flex items-center justify-between border-b py-5 font-display text-[34px] transition-all duration-700 ease-atlas edge"
+                className="group/item flex items-center justify-between border-b py-5 font-display text-[clamp(28px,8vw,38px)] transition-all duration-700 ease-atlas edge"
                 style={{
                   opacity: menu ? 1 : 0,
                   transform: menu ? 'none' : 'translateY(28px)',
@@ -172,7 +194,10 @@ export default function Header({ lang }) {
                 }}
               >
                 {n.label}
-                <ArrowUpRight className="h-6 w-6 text-[--brass] transition-transform duration-500 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+                <ArrowUpRight
+                  className="h-6 w-6 transition-transform duration-500 group-hover/item:translate-x-1 group-hover/item:-translate-y-1"
+                  style={{ color: 'var(--brass)' }}
+                />
               </Link>
             ))}
           </nav>
@@ -191,21 +216,30 @@ export default function Header({ lang }) {
                   key={c.slug}
                   href={`/${lang}/collections/${c.slug}`}
                   className="link-underline text-[13px]"
-                  style={{ color: 'rgba(242,234,223,0.72)' }}
+                  style={{ color: 'rgba(242,234,223,0.74)' }}
                 >
                   {t(c.name, lang)}
                 </Link>
               ))}
             </div>
-            <Link
-              href={otherHref}
-              hrefLang={other}
-              className="mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-wide2"
-              style={{ color: 'var(--brass)' }}
-            >
-              <Globe className="h-4 w-4" />
-              {other === 'fr' ? 'Français' : 'English'}
-            </Link>
+
+            <div className="mt-8 flex items-center gap-2">
+              {['en', 'fr'].map((l) => (
+                <Link
+                  key={l}
+                  href={swap(l)}
+                  hrefLang={l}
+                  className="rounded-full px-4 py-2 text-[11px] uppercase tracking-wide2"
+                  style={{
+                    background: l === lang ? 'var(--brass)' : 'rgba(242,234,223,0.06)',
+                    color: l === lang ? 'var(--ink)' : 'rgba(242,234,223,0.7)',
+                    border: '1px solid var(--edge)',
+                  }}
+                >
+                  {l === 'en' ? 'English' : 'Français'}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

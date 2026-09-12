@@ -5,7 +5,7 @@ export default function Craft({ lang }) {
   const d = dict(lang);
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-36" style={{ background: 'var(--ink)' }}>
+    <section className="band-deep band-edge relative overflow-hidden py-24 md:py-32">
       <div className="pointer-events-none absolute -left-40 top-0 h-[520px] w-[520px] glow-warm opacity-50" />
       <div className="pointer-events-none absolute -right-40 bottom-0 h-[520px] w-[520px] glow-verdigris opacity-50" />
 

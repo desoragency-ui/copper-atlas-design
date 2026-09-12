@@ -35,8 +35,8 @@ export default async function GuidesPage({ params }) {
       title={fr ? 'Avant d’acheter' : 'Before you buy'}
       lead={
         fr
-          ? 'Les questions qu’on nous pose avant chaque commande, répondues en entier — mesures, finitions et compromis réels compris.'
-          : 'The questions we get before every order, answered in full — measurements, finishes and the real trade-offs included.'
+          ? 'Les questions qu’on nous pose avant chaque commande, répondues en entier - mesures, finitions et compromis réels compris.'
+          : 'The questions we get before every order, answered in full - measurements, finishes and the real trade-offs included.'
       }
     >
       <div className="grid gap-5 md:grid-cols-3">

@@ -4,7 +4,7 @@ import { ArrowUpRight } from '../Icons';
 import { CATEGORIES, byCategory } from '@/data/products';
 import { dict, t } from '@/lib/i18n';
 
-/* Asymmetric bento — collapses to a single column below md. */
+/* Asymmetric bento - collapses to a single column below md. */
 const SPAN = [
   'md:col-span-7 md:row-span-2',
   'md:col-span-5',
@@ -18,10 +18,10 @@ export default function CategoryBento({ lang }) {
   const d = dict(lang);
 
   return (
-    <section className="mx-auto max-w-[1320px] px-6 py-24 md:px-10 md:py-36">
+    <section className="band-patina band-edge">
+      <div className="mx-auto max-w-[1320px] px-6 py-24 md:px-10 md:py-32">
       <Reveal className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="eyebrow mb-6">{d.collections}</p>
           <h2 className="max-w-xl font-display text-[clamp(34px,5.2vw,62px)] leading-[1.02] text-balance">
             {d.shopByRoom}
           </h2>
@@ -92,6 +92,7 @@ export default function CategoryBento({ lang }) {
             </Reveal>
           );
         })}
+        </div>
       </div>
     </section>
   );

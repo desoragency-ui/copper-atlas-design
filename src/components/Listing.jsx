@@ -37,7 +37,7 @@ export default function Listing({ lang, products, showCategoryFilter = true }) {
     <>
       <div className="sticky top-[86px] z-20 -mx-6 mb-10 px-6 py-3 md:-mx-10 md:px-10"
         style={{
-          background: 'rgba(14,43,36,0.86)',
+          background: 'rgba(20,72,59,0.9)',
           backdropFilter: 'blur(18px)',
           WebkitBackdropFilter: 'blur(18px)',
           borderBottom: '1px solid var(--edge)',
@@ -149,7 +149,7 @@ function Select({ label, value, onChange, options, className = '' }) {
         }}
       >
         {options.map((o) => (
-          <option key={o.v} value={o.v} style={{ background: '#0E2B24', color: '#F2EADF' }}>
+          <option key={o.v} value={o.v} style={{ background: '#0e2b24', color: '#F2EADF' }}>
             {o.l}
           </option>
         ))}

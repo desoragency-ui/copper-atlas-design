@@ -28,7 +28,7 @@ export function CartProvider({ children }) {
     try {
       window.localStorage.setItem(KEY, JSON.stringify(items));
     } catch {
-      /* not fatal — cart just won't survive a reload */
+      /* not fatal - cart just won't survive a reload */
     }
   }, [items, ready]);
 

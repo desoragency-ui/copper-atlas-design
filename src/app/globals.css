@@ -3,16 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --forest: #0e2b24;
-  --emerald: #14483b;
+  /* Brand greens, lightest → deepest.
+     --bg is the page. --surface sits ON the page (cards, panels) and is darker,
+     so panels recede and copper reads as the only light in the room. */
+  --bg: #14483b; /* Emerald - page ground */
+  --bg-2: #113d32; /* mid stop for section gradients */
+  --surface: #0e2b24; /* Deep Forest - cards, panels */
+  --ink: #081a16; /* deepest - footer, lightbox scrim */
+
   --verdigris: #4e9a86;
   --copper: #c98a5b;
   --brass: #e0a96d;
+  --brass-hi: #f0d9a8;
   --bone: #f2eadf;
-  --ink: #081a16;
-  --edge: rgba(242, 234, 223, 0.12);
-  --edge-strong: rgba(242, 234, 223, 0.22);
-  --nav-h: 74px;
+
+  --edge: rgba(242, 234, 223, 0.13);
+  --edge-strong: rgba(242, 234, 223, 0.24);
+
+  --announce-h: 38px;
+  --nav-h: 70px;
 }
 
 @layer base {
@@ -22,7 +31,7 @@
   }
 
   body {
-    background: var(--forest);
+    background: var(--bg);
     color: var(--bone);
     font-family: var(--font-sans), system-ui, sans-serif;
     font-size: 16px;
@@ -32,10 +41,10 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
     font-weight: 300;
-    line-height: 1.02;
-    letter-spacing: -0.015em;
+    line-height: 1.04;
+    letter-spacing: -0.012em;
   }
 
   ::selection {
@@ -49,7 +58,6 @@
     border-radius: 4px;
   }
 
-  /* Firefox scrollbar, then WebKit */
   * { scrollbar-color: rgba(224, 169, 109, 0.35) transparent; scrollbar-width: thin; }
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--ink); }
@@ -65,14 +73,16 @@
   /* ── Double-bezel: outer tray + inner plate, concentric radii ─────────── */
   .bezel {
     @apply rounded-bezel p-1.5;
-    background: rgba(242, 234, 223, 0.045);
-    box-shadow: inset 0 1px 0 rgba(242, 234, 223, 0.1);
+    background: linear-gradient(150deg, rgba(242, 234, 223, 0.08), rgba(242, 234, 223, 0.02) 55%);
+    box-shadow: inset 0 1px 0 rgba(242, 234, 223, 0.12);
     border: 1px solid var(--edge);
   }
   .bezel-core {
     @apply rounded-core overflow-hidden relative;
-    background: var(--emerald);
-    box-shadow: inset 0 1px 1px rgba(242, 234, 223, 0.13);
+    background: var(--surface);
+    box-shadow:
+      inset 0 1px 1px rgba(242, 234, 223, 0.12),
+      0 24px 60px -40px rgba(0, 0, 0, 0.85);
   }
 
   /* ── Pill CTA with a nested icon disc ─────────────────────────────────── */
@@ -83,11 +93,21 @@
     min-height: 52px;
   }
   .btn-primary {
-    background: linear-gradient(120deg, var(--brass), var(--copper) 62%, #b5764a);
+    background: linear-gradient(118deg, var(--brass-hi), var(--brass) 38%, var(--copper) 72%, #b0703f);
+    background-size: 190% 190%;
+    background-position: 0% 50%;
     color: var(--ink);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.32) inset, 0 18px 45px -22px rgba(224, 169, 109, 0.85);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.42),
+      0 20px 48px -24px rgba(224, 169, 109, 0.75);
+    transition: background-position 900ms cubic-bezier(0.32, 0.72, 0, 1), box-shadow 500ms, transform 350ms;
   }
-  .btn-primary:hover { filter: brightness(1.07); }
+  .btn-primary:hover {
+    background-position: 100% 50%;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      0 26px 60px -22px rgba(224, 169, 109, 0.9);
+  }
   .btn-primary:active { transform: scale(0.98); }
 
   .btn-ghost {
@@ -95,32 +115,33 @@
     color: var(--bone);
     border: 1px solid var(--edge-strong);
   }
-  .btn-ghost:hover { background: rgba(242, 234, 223, 0.1); border-color: rgba(224, 169, 109, 0.5); }
+  .btn-ghost:hover {
+    background: rgba(242, 234, 223, 0.1);
+    border-color: rgba(224, 169, 109, 0.55);
+  }
   .btn-ghost:active { transform: scale(0.98); }
 
   .btn-disc {
     @apply grid place-items-center rounded-full shrink-0;
     width: 32px;
     height: 32px;
-    background: rgba(8, 26, 22, 0.14);
-    transition: transform 500ms cubic-bezier(0.32, 0.72, 0, 1);
+    background: rgba(8, 26, 22, 0.15);
+    transition: transform 600ms cubic-bezier(0.32, 0.72, 0, 1);
   }
   .btn-ghost .btn-disc { background: rgba(242, 234, 223, 0.1); }
-  .group\/btn:hover .btn-disc,
-  .btn:hover .btn-disc { transform: translate(4px, -1px) scale(1.06); }
+  .btn:hover .btn-disc { transform: translate(4px, -2px) scale(1.08); }
 
   /* ── Eyebrow tag ──────────────────────────────────────────────────────── */
   .eyebrow {
     @apply inline-flex items-center gap-2 rounded-full uppercase;
-    padding: 5px 13px;
+    padding: 5px 14px;
     font-size: 10px;
     letter-spacing: 0.28em;
     color: var(--brass);
-    border: 1px solid rgba(224, 169, 109, 0.28);
-    background: rgba(224, 169, 109, 0.07);
+    border: 1px solid rgba(224, 169, 109, 0.3);
+    background: linear-gradient(120deg, rgba(224, 169, 109, 0.14), rgba(224, 169, 109, 0.04));
   }
 
-  /* ── Hairline rule that fades at both ends ────────────────────────────── */
   .rule {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--edge-strong) 18%, var(--edge-strong) 82%, transparent);
@@ -128,18 +149,18 @@
 
   .field {
     @apply w-full rounded-2xl px-4 py-3 text-[15px] transition-colors duration-300;
-    background: rgba(8, 26, 22, 0.5);
+    background: rgba(8, 26, 22, 0.42);
     border: 1px solid var(--edge);
     color: var(--bone);
   }
-  .field::placeholder { color: rgba(242, 234, 223, 0.34); }
-  .field:focus { border-color: rgba(224, 169, 109, 0.55); outline: none; }
+  .field::placeholder { color: rgba(242, 234, 223, 0.36); }
+  .field:focus { border-color: rgba(224, 169, 109, 0.6); outline: none; }
 
   .label {
     @apply block mb-2 uppercase;
     font-size: 10px;
     letter-spacing: 0.22em;
-    color: rgba(242, 234, 223, 0.55);
+    color: rgba(242, 234, 223, 0.58);
   }
 
   .link-underline {
@@ -150,52 +171,108 @@
     transition: background-size 550ms cubic-bezier(0.32, 0.72, 0, 1);
   }
   .link-underline:hover { background-size: 100% 1px; }
+
+  /* ── Section grounds ──────────────────────────────────────────────────── */
+
+  /* Page → deeper, for sections that should feel recessed */
+  .band-deep {
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(224, 169, 109, 0.07), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 22%, var(--surface) 62%, var(--bg-2) 100%);
+  }
+
+  /* A soft verdigris wash - used once, so it stays an event */
+  .band-patina {
+    background:
+      radial-gradient(90% 70% at 18% 12%, rgba(78, 154, 134, 0.16), transparent 62%),
+      radial-gradient(80% 70% at 88% 88%, rgba(224, 169, 109, 0.1), transparent 60%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 55%, var(--bg-2) 100%);
+  }
+
+  /* Hairline divider between full-bleed bands */
+  .band-edge {
+    position: relative;
+  }
+  .band-edge::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--edge-strong) 30%, var(--edge-strong) 70%, transparent);
+  }
 }
 
 @layer utilities {
   .edge { border-color: var(--edge); }
 
-  /* Film grain — fixed, pointer-events-none, never on a scrolling container */
+  /* Copper foil gradient on display type. Applied to a span, never a whole
+     heading block, so the fallback colour stays readable if clipping is unsupported. */
+  .foil {
+    background: linear-gradient(104deg, var(--brass-hi) 4%, var(--brass) 38%, var(--copper) 70%, var(--brass) 96%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    .foil { color: var(--brass); -webkit-text-fill-color: var(--brass); }
+  }
+
+  /* Film grain - fixed, pointer-events-none, never on a scrolling container */
   .grain::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.032;
+    opacity: 0.028;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .glow-warm {
-    background: radial-gradient(circle at 50% 45%, rgba(224, 169, 109, 0.22), transparent 62%);
-  }
-  .glow-verdigris {
-    background: radial-gradient(circle at 50% 50%, rgba(78, 154, 134, 0.18), transparent 65%);
-  }
+  .glow-warm { background: radial-gradient(circle at 50% 45%, rgba(224, 169, 109, 0.2), transparent 62%); }
+  .glow-verdigris { background: radial-gradient(circle at 50% 50%, rgba(78, 154, 134, 0.2), transparent 65%); }
 
   /* Scroll-reveal: JS adds .is-in when the element enters the viewport */
   .reveal {
     opacity: 0;
-    transform: translateY(34px);
-    filter: blur(7px);
+    transform: translateY(30px);
+    filter: blur(6px);
     transition:
-      opacity 900ms cubic-bezier(0.32, 0.72, 0, 1),
-      transform 900ms cubic-bezier(0.32, 0.72, 0, 1),
-      filter 900ms cubic-bezier(0.32, 0.72, 0, 1);
+      opacity 950ms cubic-bezier(0.32, 0.72, 0, 1),
+      transform 950ms cubic-bezier(0.32, 0.72, 0, 1),
+      filter 950ms cubic-bezier(0.32, 0.72, 0, 1);
     will-change: transform, opacity;
   }
   .reveal.is-in { opacity: 1; transform: none; filter: none; }
+
+  /* Mask-reveal for display lines: the text rises out of an invisible box.
+     Padding on the mask stops descenders/ascenders being clipped. */
+  .mask-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.12em;
+    margin-block: -0.12em;
+  }
+  .mask-line > * {
+    display: block;
+    transform: translateY(105%);
+    opacity: 0;
+    transition:
+      transform 1200ms cubic-bezier(0.32, 0.72, 0, 1),
+      opacity 900ms ease;
+  }
+  .mask-line.is-in > * { transform: none; opacity: 1; }
 
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
-
   .tabular { font-variant-numeric: tabular-nums; }
 }
 
-/* Respect the OS setting — no exceptions. */
+/* Respect the OS setting - no exceptions. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,
@@ -206,4 +283,5 @@
     transition-duration: 0.001ms !important;
   }
   .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .mask-line > * { transform: none !important; opacity: 1 !important; }
 }
