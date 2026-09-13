@@ -15,7 +15,7 @@ export const runtime = 'nodejs';
  * Prices are recomputed here from the catalogue, never trusted from the client.
  */
 
-import { getProduct, fromPrice } from '@/data/products';
+import { getProduct, sizesFor } from '@/data/products';
 
 const MAX_ITEMS = 40;
 const str = (v, max = 300) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
@@ -29,14 +29,16 @@ function priceLine(line) {
   let unit = null;
 
   if (!p.priceOnRequest) {
-    if (p.sizes?.length) {
-      const size = p.sizes.find((s) => s.cm === line.size);
+    // Resolve the ladder for THIS finish — a finish may override the product's,
+    // so the same diameter can legitimately cost more in oil-rubbed than gold.
+    const sizes = sizesFor(p, finish.id);
+    if (sizes?.length) {
+      const size = sizes.find((s) => s.cm === line.size);
       if (!size) return null;
       unit = size.price;
     } else {
       unit = p.price ?? null;
     }
-    if (unit != null) unit += finish.priceDelta ?? 0;
   }
 
   const qty = Math.max(1, Math.min(99, Number(line.qty) || 1));

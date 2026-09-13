@@ -8,6 +8,7 @@ import { useCart } from '@/lib/cart';
 import { dict, t } from '@/lib/i18n';
 import { money, SHOP, waLink } from '@/lib/shop';
 import { ratingFor } from '@/data/reviews';
+import { sizesFor } from '@/data/products';
 import {
   ArrowUpRight, Check, Minus, Plus, Star, Whatsapp,
   IconHammer, IconShip, IconShield, IconReturn,
@@ -18,7 +19,7 @@ export default function ProductDetail({ product: p, lang }) {
   const { add } = useCart();
 
   const [finishId, setFinishId] = useState(p.finishes[0].id);
-  const [sizeIdx, setSizeIdx] = useState(p.sizes ? 1 : null); // default 30 cm - the volume seller
+  const [sizeIdx, setSizeIdx] = useState(sizesFor(p, p.finishes[0].id) ? 1 : null); // default 30 cm - the volume seller
   const [qty, setQty] = useState(1);
   const [done, setDone] = useState(false);
   const buyRef = useRef(null);
@@ -27,12 +28,14 @@ export default function ProductDetail({ product: p, lang }) {
     () => p.finishes.find((f) => f.id === finishId) ?? p.finishes[0],
     [p.finishes, finishId]
   );
-  const size = p.sizes ? p.sizes[sizeIdx] : null;
+
+  // A finish can carry its own ladder, so the sizes are resolved per finish.
+  // Both ladders share the same diameters, so the index stays valid on switch.
+  const sizes = sizesFor(p, finish.id);
+  const size = sizes ? sizes[Math.min(sizeIdx ?? 0, sizes.length - 1)] : null;
   const rating = ratingFor(p.slug);
 
-  const unit = p.priceOnRequest
-    ? null
-    : (size ? size.price : p.price ?? 0) + (finish.priceDelta ?? 0);
+  const unit = p.priceOnRequest ? null : size ? size.price : p.price ?? null;
 
   useEffect(() => {
     if (!done) return;
@@ -151,7 +154,7 @@ export default function ProductDetail({ product: p, lang }) {
           </fieldset>
 
           {/* size */}
-          {p.sizes && (
+          {sizes && (
             <fieldset className="mb-8">
               <legend className="label flex items-center justify-between">
                 <span>{d.size}</span>
@@ -160,7 +163,7 @@ export default function ProductDetail({ product: p, lang }) {
                 </span>
               </legend>
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-                {p.sizes.map((s, n) => {
+                {sizes.map((s, n) => {
                   const on = n === sizeIdx;
                   return (
                     <button

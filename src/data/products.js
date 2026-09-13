@@ -7,26 +7,59 @@
  * product pages, the cart, the sitemap and the structured data at once.
  *
  * PRICING
- * Lamps use `sizes[]` - Tarik's confirmed retail list, USD:
- * 25cm $167 · 30cm $192 · 35cm $236 · 40cm $282 · 45cm $332 · 50cm $384
- * Sinks, basins and spa pieces are `priceOnRequest: true` until Tarik sends
- * his sink price sheet. Replace with `price: <usd>` (or a `sizes[]` array)
+ * Lamps carry a `sizes[]` ladder — see TIER_A / TIER_A_OIL / TIER_B below.
+ * A finish may override the product's ladder with its own `sizes[]`, which is
+ * how the Lotus Cluster Pendant prices oil-rubbed 15% above gold.
+ *
+ * Sinks, basins, spa pieces — and any lamp with no confirmed ladder yet — are
+ * `priceOnRequest: true`. Replace that with `sizes: TIER_x` (or `price: <usd>`)
  * and the "Price on request" CTA turns into a normal Add-to-cart button.
  *
- * FINISHES
- * Both finishes currently carry the same price. If Oil-Rubbed ends up costing
- * more, add `priceDelta: <usd>` to that finish and it is added per unit.
+ * Still awaiting a price from Tarik: kasbah-dome-pendant, souk-globe-pendant,
+ * and every sink, basin and spa piece.
+ *
+ * Read a ladder with `sizesFor(product, finishId)`, never `product.sizes`.
  * ────────────────────────────────────────────────────────────────────────────
  */
+/**
+ * Three confirmed price ladders, USD. Diameters are identical across all of
+ * them; only the money differs.
+ *
+ *   TIER_A    1300–3000 DH   the lower ladder
+ *   TIER_B                   the standard ladder
+ *   TIER_A_OIL 1495–3450 DH  TIER_A + 15%, used where the oil-rubbed finish
+ *                            costs more than the gold one
+ *
+ * A finish may carry its own `sizes` array, which overrides the product's.
+ * That is how one piece can be priced differently per finish — see the Lotus
+ * Cluster Pendant. Read prices with `sizesFor(product, finishId)`, never by
+ * reaching for `product.sizes` directly.
+ */
+const TIER_A = [
+  { cm: 25, in: '9.84"', price: 139 },
+  { cm: 30, in: '11.81"', price: 160 },
+  { cm: 35, in: '13.78"', price: 197 },
+  { cm: 40, in: '15.75"', price: 235 },
+  { cm: 45, in: '17.72"', price: 277 },
+  { cm: 50, in: '19.69"', price: 320 },
+];
 
-// Tarik's confirmed lamp price ladder.
-const LAMP_SIZES = [
-  { cm: 25, in: '9.8"', price: 167 },
-  { cm: 30, in: '11.8"', price: 192 },
-  { cm: 35, in: '13.8"', price: 236 },
-  { cm: 40, in: '15.7"', price: 282 },
-  { cm: 45, in: '17.7"', price: 332 },
-  { cm: 50, in: '19.7"', price: 384 },
+const TIER_A_OIL = [
+  { cm: 25, in: '9.84"', price: 159 },
+  { cm: 30, in: '11.81"', price: 184 },
+  { cm: 35, in: '13.78"', price: 227 },
+  { cm: 40, in: '15.75"', price: 270 },
+  { cm: 45, in: '17.72"', price: 319 },
+  { cm: 50, in: '19.69"', price: 368 },
+];
+
+const TIER_B = [
+  { cm: 25, in: '9.84"', price: 167 },
+  { cm: 30, in: '11.81"', price: 192 },
+  { cm: 35, in: '13.78"', price: 236 },
+  { cm: 40, in: '15.75"', price: 282 },
+  { cm: 45, in: '17.72"', price: 332 },
+  { cm: 50, in: '19.69"', price: 384 },
 ];
 
 const GOLD = {
@@ -131,10 +164,10 @@ export const PRODUCTS = [
       fr: 'Chaque pétale part d’un disque de laiton plat, martelé à la main jusqu’à s’enrouler sur lui-même - c’est le pli qui retient la lumière. Suspendus en grappe de trois sous une même rosace noir mat, les abat-jour tombent à des hauteurs différentes pour superposer la lumière au lieu de l’aplatir. Aucun pétale ne se plie deux fois pareil.',
     },
     finishes: [
-      { ...GOLD, images: img('lotus-cluster-pendant', [1, 2, 3, 4, 5, 6, 13]) },
-      { ...OIL, images: img('lotus-cluster-pendant', [7, 8, 9, 10, 11, 12, 14]) },
+      { ...GOLD, sizes: TIER_A, images: img('lotus-cluster-pendant', [1, 2, 3, 4, 5, 6, 13]) },
+      { ...OIL, sizes: TIER_A_OIL, images: img('lotus-cluster-pendant', [7, 8, 9, 10, 11, 12, 14]) },
     ],
-    sizes: LAMP_SIZES,
+    // Priced per finish: oil-rubbed carries a 15% premium on this piece.
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Solid brass', fr: 'Laiton massif' } },
       { k: { en: 'Finish', fr: 'Finition' }, v: { en: 'Hand-hammered', fr: 'Martelé main' } },
@@ -165,7 +198,7 @@ export const PRODUCTS = [
       { ...GOLD, images: img('atlas-verdigris-dome-pendant', [1, 2, 3, 4, 5]) },
       { ...OIL, images: img('atlas-verdigris-dome-pendant', [6, 7, 8, 9, 10, 11]) },
     ],
-    sizes: LAMP_SIZES,
+    sizes: TIER_B,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Copper / brass', fr: 'Cuivre / laiton' } },
       { k: { en: 'Finish', fr: 'Finition' }, v: { en: 'Polished + live patina', fr: 'Poli + patine vivante' } },
@@ -192,7 +225,7 @@ export const PRODUCTS = [
       { ...OIL, images: img('sahara-wide-dome-pendant', [1, 2, 3, 4, 5]) },
       { ...GOLD, images: img('sahara-wide-dome-pendant', [1, 2, 3, 4, 5]) },
     ],
-    sizes: LAMP_SIZES,
+    sizes: TIER_B,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Hammered brass', fr: 'Laiton martelé' } },
       { k: { en: 'Profile', fr: 'Profil' }, v: { en: 'Wide, shallow', fr: 'Large, peu profond' } },
@@ -217,7 +250,8 @@ export const PRODUCTS = [
       { ...OIL, images: img('kasbah-dome-pendant', [1, 2, 3, 4, 5]) },
       { ...GOLD, images: img('kasbah-dome-pendant', [1, 2, 3, 4, 5]) },
     ],
-    sizes: LAMP_SIZES,
+    // No confirmed retail ladder for this piece yet.
+    priceOnRequest: true,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Hammered copper', fr: 'Cuivre martelé' } },
       { k: { en: 'Interior', fr: 'Intérieur' }, v: { en: 'Raw copper', fr: 'Cuivre brut' } },
@@ -238,7 +272,7 @@ export const PRODUCTS = [
       fr: 'Chaque vague est percée à la main au burin, coup par coup. Allumé, l’abat-jour cesse d’être un objet et devient un projecteur - le mur derrière lui s’anime. Suspendu par chaîne de laiton plutôt que par câble.',
     },
     finishes: [{ ...GOLD, images: img('oasis-wave-pendant', [1, 2, 3, 4, 5]) }],
-    sizes: LAMP_SIZES,
+    sizes: TIER_A,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Pierced brass', fr: 'Laiton ajouré' } },
       { k: { en: 'Suspension', fr: 'Suspension' }, v: { en: 'Brass chain', fr: 'Chaîne laiton' } },
@@ -259,7 +293,8 @@ export const PRODUCTS = [
       fr: 'Une sphère entière ajourée en losanges, ouverte à la base pour que le plan de travail reste correctement éclairé. Au-dessus, le motif grimpe au plafond. Les deux fonctions d’un luminaire de cuisine, tenues par une seule pièce.',
     },
     finishes: [{ ...OIL, images: img('souk-globe-pendant', [1, 2, 3, 4, 5]) }],
-    sizes: LAMP_SIZES,
+    // No confirmed retail ladder for this piece yet.
+    priceOnRequest: true,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Pierced brass', fr: 'Laiton ajouré' } },
       { k: { en: 'Form', fr: 'Forme' }, v: { en: 'Open-base sphere', fr: 'Sphère ouverte en bas' } },
@@ -280,7 +315,7 @@ export const PRODUCTS = [
       fr: 'Verre dépoli et vert serti panneau par panneau dans une armature de laiton soudée, comme on fabrique encore les lanternes dans les ateliers de la vieille médina. Lumière plus douce que le métal ajouré - elle diffuse au lieu de dessiner.',
     },
     finishes: [{ ...OIL, images: img('andalus-glass-lantern', [1, 2, 3, 4, 5]) }],
-    sizes: LAMP_SIZES,
+    sizes: TIER_A,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Brass + leaded glass', fr: 'Laiton + verre serti' } },
       { k: { en: 'Glass', fr: 'Verre' }, v: { en: 'Frosted / green', fr: 'Dépoli / vert' } },
@@ -304,7 +339,7 @@ export const PRODUCTS = [
       fr: 'Un plafonnier lobé, ajouré de rosaces concentriques. Plaqué au plafond, le motif s’étale au lieu de tomber - couloirs, entrées, salles de bain, et toute pièce où une suspension gênerait.',
     },
     finishes: [{ ...OIL, images: img('riad-flush-ceiling-light', [1, 2, 3, 4, 5]) }],
-    sizes: LAMP_SIZES,
+    sizes: TIER_B,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Pierced brass', fr: 'Laiton ajouré' } },
       { k: { en: 'Mount', fr: 'Fixation' }, v: { en: 'Flush to ceiling', fr: 'Plaqué au plafond' } },
@@ -329,7 +364,7 @@ export const PRODUCTS = [
       fr: 'Une seule feuille de cuivre roulée en courbe à sa base, avec une douille en laiton nu posée dans le creux. La surface turquoise et rouille n’est pas une peinture - c’est le métal qui réagit, et il continue d’évoluer des mois après sa pose. Intérieur ou extérieur abrité.',
     },
     finishes: [{ ...VERDIGRIS, images: img('cascade-wall-sconce', [1, 2, 3, 4, 5, 6, 7, 8, 9]) }],
-    price: 148,
+    sizes: TIER_B,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Sheet copper', fr: 'Feuille de cuivre' } },
       { k: { en: 'Finish', fr: 'Finition' }, v: { en: 'Live verdigris patina', fr: 'Patine verdigris vivante' } },
@@ -554,9 +589,22 @@ export const getCategory = (slug) => CATEGORIES.find((c) => c.slug === slug);
 export const byCategory = (slug) => PRODUCTS.filter((p) => p.category === slug);
 
 /** Lowest advertised price, or null when the piece is quote-only. */
+/**
+ * The size ladder that applies to one finish. A finish may override the
+ * product's ladder — the Lotus Cluster Pendant prices oil-rubbed 15% above
+ * gold, so the two finishes carry different ladders on the same piece.
+ */
+export const sizesFor = (p, finishId) => {
+  const f = finishId ? p.finishes.find((x) => x.id === finishId) : null;
+  return f?.sizes ?? p.sizes ?? null;
+};
+
+/** Lowest advertised price across every finish, or null when quote-only. */
 export const fromPrice = (p) => {
   if (p.priceOnRequest) return null;
-  if (p.sizes?.length) return Math.min(...p.sizes.map((s) => s.price));
+  const ladders = p.finishes.map((f) => f.sizes).filter(Boolean);
+  if (!ladders.length && p.sizes) ladders.push(p.sizes);
+  if (ladders.length) return Math.min(...ladders.flat().map((s) => s.price));
   return p.price ?? null;
 };
 
