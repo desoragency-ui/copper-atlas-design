@@ -43,7 +43,7 @@ export default function CartPageInner({ lang }) {
                   {l.name}
                 </Link>
                 <p className="mt-1.5 text-[11.5px] uppercase tracking-wide2 opacity-50">
-                  {l.finishName}{l.size ? ` · ${l.size} cm` : ''}
+                  {l.finishName}{l.size ? ` · ${l.sizeText ?? `${l.size} cm`}` : ''}
                 </p>
 
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-4">

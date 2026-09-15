@@ -31,7 +31,7 @@ export default function CartDrawer({ lang }) {
         onClick={() => setOpen(false)}
         className="fixed inset-0 z-50"
         style={{
-          background: 'rgba(8,26,22,0.62)',
+          background: 'rgba(var(--ink-rgb),0.62)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
           opacity: open ? 1 : 0,
@@ -119,7 +119,7 @@ export default function CartDrawer({ lang }) {
                     </Link>
                     <p className="mt-1 text-[11.5px] uppercase tracking-wide2 opacity-55">
                       {l.finishName}
-                      {l.size ? ` · ${l.size} cm` : ''}
+                      {l.size ? ` · ${l.sizeText ?? `${l.size} cm`}` : ''}
                     </p>
 
                     <div className="mt-3 flex items-center justify-between gap-3">

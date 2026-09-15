@@ -117,7 +117,7 @@ export default function Reviews({ slug, productName, lang }) {
                     ['low', d.lowestRated],
                     ['helpful', d.mostHelpful],
                   ].map(([v, l]) => (
-                    <option key={v} value={v} style={{ background: '#0e2b24' }}>{l}</option>
+                    <option key={v} value={v} style={{ background: '#1f1a14' }}>{l}</option>
                   ))}
                 </select>
               </label>

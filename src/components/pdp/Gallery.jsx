@@ -56,7 +56,7 @@ export default function Gallery({ images, alt, lang }) {
 
             <span
               className="tabular pointer-events-none absolute bottom-4 right-4 rounded-full px-3 py-1.5 text-[11px] backdrop-blur-md"
-              style={{ background: 'rgba(8,26,22,0.6)', border: '1px solid var(--edge)' }}
+              style={{ background: 'rgba(var(--ink-rgb),0.6)', border: '1px solid var(--edge)' }}
             >
               {i + 1} / {images.length}
             </span>
@@ -88,7 +88,7 @@ export default function Gallery({ images, alt, lang }) {
       {zoom && (
         <div
           className="fixed inset-0 z-[70] grid place-items-center p-4"
-          style={{ background: 'rgba(8,26,22,0.95)', backdropFilter: 'blur(14px)' }}
+          style={{ background: 'rgba(var(--ink-rgb),0.95)', backdropFilter: 'blur(14px)' }}
           role="dialog"
           aria-modal="true"
         >

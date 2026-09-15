@@ -95,7 +95,7 @@ export default function FinishCompare({ lang }) {
             className="absolute top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full backdrop-blur-md transition-transform duration-300 active:scale-95"
             style={{
               left: `${pct}%`,
-              background: 'rgba(8,26,22,0.55)',
+              background: 'rgba(var(--ink-rgb),0.55)',
               border: '1px solid rgba(242,234,223,0.4)',
             }}
           >
@@ -108,11 +108,11 @@ export default function FinishCompare({ lang }) {
 
           {/* labels */}
           <span className="pointer-events-none absolute bottom-5 left-5 rounded-full px-3.5 py-1.5 text-[10px] uppercase tracking-eyebrow backdrop-blur-md"
-            style={{ background: 'rgba(8,26,22,0.6)', color: '#F0D9A8', border: '1px solid rgba(242,234,223,0.18)' }}>
+            style={{ background: 'rgba(var(--ink-rgb),0.6)', color: '#F0D9A8', border: '1px solid rgba(242,234,223,0.18)' }}>
             {lang === 'fr' ? 'Cuivre Doré' : 'Gold Copper'}
           </span>
           <span className="pointer-events-none absolute bottom-5 right-5 rounded-full px-3.5 py-1.5 text-[10px] uppercase tracking-eyebrow backdrop-blur-md"
-            style={{ background: 'rgba(8,26,22,0.6)', color: '#C9956F', border: '1px solid rgba(242,234,223,0.18)' }}>
+            style={{ background: 'rgba(var(--ink-rgb),0.6)', color: '#C9956F', border: '1px solid rgba(242,234,223,0.18)' }}>
             {lang === 'fr' ? 'Cuivre Patiné' : 'Oil-Rubbed Copper'}
           </span>
         </div>

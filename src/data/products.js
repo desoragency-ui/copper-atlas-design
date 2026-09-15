@@ -15,8 +15,8 @@
  * `priceOnRequest: true`. Replace that with `sizes: TIER_x` (or `price: <usd>`)
  * and the "Price on request" CTA turns into a normal Add-to-cart button.
  *
- * Still awaiting a price from Tarik: kasbah-dome-pendant, souk-globe-pendant,
- * and every sink, basin and spa piece.
+ * Still awaiting a price from Tarik: kasbah-dome-pendant, the fluted and
+ * engraved basins, every kitchen sink, and the spa pieces.
  *
  * Read a ladder with `sizesFor(product, finishId)`, never `product.sizes`.
  * ────────────────────────────────────────────────────────────────────────────
@@ -62,6 +62,19 @@ const TIER_B = [
   { cm: 50, in: '19.69"', price: 384 },
 ];
 
+/**
+ * Basins are quoted by outside width × depth, not by a single diameter, so the
+ * ladder carries a `label`. `cm` stays the unique numeric key the cart and
+ * /api/order match a line on - never render it directly for these.
+ */
+const BASIN_OVAL = [
+  { cm: 35, short: '35×15', label: { en: '35 × 15 cm', fr: '35 × 15 cm' }, in: '13.8 × 5.9"', price: 200 },
+  { cm: 40, short: '40×20', label: { en: '40 × 20 × 25 cm', fr: '40 × 20 × 25 cm' }, in: '15.7 × 7.9 × 9.8"', price: 400 },
+  { cm: 45, short: '45×35', label: { en: '45 × 35 cm', fr: '45 × 35 cm' }, in: '17.7 × 13.8"', price: 800 },
+  { cm: 50, short: '50×35', label: { en: '50 × 35 cm', fr: '50 × 35 cm' }, in: '19.7 × 13.8"', price: 1600 },
+  { cm: 60, short: 'XL', label: { en: 'Larger × 35 cm', fr: 'Plus grand × 35 cm' }, in: 'On request', price: 3200 },
+];
+
 const GOLD = {
   id: 'gold',
   name: { en: 'Gold Copper', fr: 'Cuivre Doré' },
@@ -85,6 +98,8 @@ const VERDIGRIS = {
   swatch: '#4E9A86',
   swatch2: '#8FC4B4',
 };
+
+import { t } from '@/lib/i18n';
 
 /** Build `/products/<slug>/NN.webp` paths from image numbers. */
 const img = (slug, ns) => ns.map((n) => `/products/${slug}/${String(n).padStart(2, '0')}.webp`);
@@ -293,8 +308,7 @@ export const PRODUCTS = [
       fr: 'Une sphère entière ajourée en losanges, ouverte à la base pour que le plan de travail reste correctement éclairé. Au-dessus, le motif grimpe au plafond. Les deux fonctions d’un luminaire de cuisine, tenues par une seule pièce.',
     },
     finishes: [{ ...OIL, images: img('souk-globe-pendant', [1, 2, 3, 4, 5]) }],
-    // No confirmed retail ladder for this piece yet.
-    priceOnRequest: true,
+    sizes: TIER_B,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Pierced brass', fr: 'Laiton ajouré' } },
       { k: { en: 'Form', fr: 'Forme' }, v: { en: 'Open-base sphere', fr: 'Sphère ouverte en bas' } },
@@ -437,7 +451,7 @@ export const PRODUCTS = [
       fr: 'Ni gravure ni cannelure - seulement les marques du marteau, laissées telles quelles. La pièce la plus sobre du catalogue, et celle qui va le mieux sur un plan en bois brut ou en pierre.',
     },
     finishes: [{ ...OIL, images: img('atlas-oval-basin', [1, 2, 3]) }],
-    priceOnRequest: true,
+    sizes: BASIN_OVAL,
     specs: [
       { k: { en: 'Material', fr: 'Matière' }, v: { en: 'Hammered copper', fr: 'Cuivre martelé' } },
       { k: { en: 'Type', fr: 'Type' }, v: { en: 'Countertop vessel', fr: 'Vasque à poser' } },
@@ -607,6 +621,14 @@ export const fromPrice = (p) => {
   if (ladders.length) return Math.min(...ladders.flat().map((s) => s.price));
   return p.price ?? null;
 };
+
+/**
+ * How a size reads to a customer. Lamp ladders are a single diameter, basins
+ * are quoted W × D, so the ladder may carry its own `label` / `short`.
+ * `sizeShort` is for the size buttons, `sizeLabel` for anywhere with room.
+ */
+export const sizeLabel = (s, lang) => (s?.label ? t(s.label, lang) : s ? `${s.cm} cm` : '');
+export const sizeShort = (s) => s?.short ?? String(s?.cm ?? '');
 
 export const heroImage = (p) => p.finishes[0].images[0];
 

@@ -8,7 +8,7 @@ import { useCart } from '@/lib/cart';
 import { dict, t } from '@/lib/i18n';
 import { money, SHOP, waLink } from '@/lib/shop';
 import { ratingFor } from '@/data/reviews';
-import { sizesFor } from '@/data/products';
+import { sizeLabel, sizeShort, sizesFor } from '@/data/products';
 import {
   ArrowUpRight, Check, Minus, Plus, Star, Whatsapp,
   IconHammer, IconShip, IconShield, IconReturn,
@@ -51,6 +51,7 @@ export default function ProductDetail({ product: p, lang }) {
       finish: finish.id,
       finishName: t(finish.name, lang),
       size: size?.cm ?? null,
+      sizeText: size ? sizeLabel(size, lang) : null,
       price: unit,
       qty,
     });
@@ -59,8 +60,8 @@ export default function ProductDetail({ product: p, lang }) {
 
   const quoteText =
     lang === 'fr'
-      ? `Bonjour Copper Atlas - je souhaite un prix pour : ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantité ${qty}.`
-      : `Hello Copper Atlas - I'd like a price for: ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${size.cm} cm` : ''}), quantity ${qty}.`;
+      ? `Bonjour Copper Atlas - je souhaite un prix pour : ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${sizeLabel(size, lang)}` : ''}), quantité ${qty}.`
+      : `Hello Copper Atlas - I'd like a price for: ${t(p.name, lang)} (${t(finish.name, lang)}${size ? `, ${sizeLabel(size, lang)}` : ''}), quantity ${qty}.`;
 
   return (
     <>
@@ -157,9 +158,9 @@ export default function ProductDetail({ product: p, lang }) {
           {sizes && (
             <fieldset className="mb-8">
               <legend className="label flex items-center justify-between">
-                <span>{d.size}</span>
+                <span>{sizes[0].label ? d.sizeDims : d.size}</span>
                 <span className="tabular" style={{ color: 'var(--brass)' }}>
-                  {size.cm} cm · {size.in}
+                  {sizeLabel(size, lang)} · {size.in}
                 </span>
               </legend>
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -177,7 +178,7 @@ export default function ProductDetail({ product: p, lang }) {
                         border: `1px solid ${on ? 'var(--brass)' : 'var(--edge)'}`,
                       }}
                     >
-                      <span className="text-[15px] leading-none">{s.cm}</span>
+                      <span className="text-[15px] leading-none">{sizeShort(s)}</span>
                       <span className="text-[9.5px] uppercase tracking-wide2 opacity-65">
                         {money(s.price)}
                       </span>
@@ -186,9 +187,13 @@ export default function ProductDetail({ product: p, lang }) {
                 })}
               </div>
               <p className="mt-3 text-[12.5px] opacity-50">
-                {lang === 'fr'
-                  ? 'Le diamètre est celui de l’abat-jour. Comptez 2,5 à 3 fois le diamètre en espace libre autour.'
-                  : 'Diameter is measured across the shade. Allow 2.5-3× the diameter of clear space around it.'}
+                {sizes[0].label
+                  ? lang === 'fr'
+                    ? 'Dimensions extérieures, largeur × profondeur. Toute autre dimension peut être réalisée sur mesure.'
+                    : 'Outside dimensions, width × depth. Any other size can be made to order.'
+                  : lang === 'fr'
+                    ? 'Le diamètre est celui de l’abat-jour. Comptez 2,5 à 3 fois le diamètre en espace libre autour.'
+                    : 'Diameter is measured across the shade. Allow 2.5-3× the diameter of clear space around it.'}
               </p>
             </fieldset>
           )}
@@ -355,7 +360,7 @@ function StickyBar({ lang, name, price, onAdd, quoteHref, quoteOnly, done, watch
     <div
       className="fixed inset-x-0 bottom-0 z-30 border-t px-4 py-3 edge lg:hidden"
       style={{
-        background: 'rgba(8,26,22,0.92)',
+        background: 'rgba(var(--ink-rgb),0.92)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         transform: show ? 'translateY(0)' : 'translateY(102%)',

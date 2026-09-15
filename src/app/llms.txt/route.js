@@ -1,4 +1,4 @@
-import { PRODUCTS, CATEGORIES, fromPrice } from '@/data/products';
+import { PRODUCTS, CATEGORIES, fromPrice, sizeLabel } from '@/data/products';
 import { GUIDES } from '@/data/guides';
 import { SHOP } from '@/lib/shop';
 
@@ -19,7 +19,7 @@ export function GET() {
     const price = fromPrice(p);
     const priceStr = price ? `from $${price} USD` : 'price on request';
     const finishes = p.finishes.map((f) => f.name.en).join(', ');
-    const sizes = p.sizes ? ` Sizes: ${p.sizes.map((s) => `${s.cm}cm ($${s.price})`).join(', ')}.` : '';
+    const sizes = p.sizes ? ` Sizes: ${p.sizes.map((s) => `${sizeLabel(s, 'en')} ($${s.price})`).join(', ')}.` : '';
     return `- [${p.name.en}](${SHOP.url}/en/products/${p.slug}): ${p.tagline.en}. ${priceStr}. Finishes: ${finishes}.${sizes}`;
   }).join('\n');
 

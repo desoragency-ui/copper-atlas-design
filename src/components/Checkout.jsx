@@ -22,7 +22,7 @@ export default function Checkout({ lang }) {
     const lines = items
       .map(
         (l) =>
-          `• ${l.name} - ${l.finishName}${l.size ? `, ${l.size}cm` : ''} × ${l.qty}` +
+          `• ${l.name} - ${l.finishName}${l.size ? `, ${l.sizeText ?? `${l.size} cm`}` : ''} × ${l.qty}` +
           (l.price == null ? ' (price on request)' : ` - ${money(l.price * l.qty)}`)
       )
       .join('\n');
@@ -150,7 +150,7 @@ export default function Checkout({ lang }) {
                     <div className="min-w-0 flex-1">
                       <p className="font-display text-[17px] leading-tight">{l.name}</p>
                       <p className="mt-1 text-[11px] uppercase tracking-wide2 opacity-50">
-                        {l.finishName}{l.size ? ` · ${l.size} cm` : ''}
+                        {l.finishName}{l.size ? ` · ${l.sizeText ?? `${l.size} cm`}` : ''}
                       </p>
                       <div className="mt-2.5 flex items-center justify-between gap-3">
                         <span className="flex items-center gap-1 rounded-full border edge">

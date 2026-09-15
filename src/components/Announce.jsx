@@ -31,7 +31,7 @@ export default function Announce({ lang }) {
       className="group fixed inset-x-0 top-0 z-50 overflow-hidden"
       style={{
         height: 'var(--announce-h)',
-        background: 'linear-gradient(90deg, var(--ink), #0c2620 50%, var(--ink))',
+        background: 'linear-gradient(90deg, var(--ink), var(--bg-2) 50%, var(--ink))',
         borderBottom: '1px solid rgba(224,169,109,0.16)',
         color: 'rgba(242,234,223,0.68)',
       }}

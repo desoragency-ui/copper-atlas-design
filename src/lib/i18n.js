@@ -95,6 +95,7 @@ export const DICT = {
     priceOnRequest: 'Price on request',
     requestPrice: 'Request a price',
     size: 'Diameter',
+    sizeDims: 'Size',
     finish: 'Finish',
     qty: 'Quantity',
     addToCart: 'Add to cart',
@@ -121,6 +122,23 @@ export const DICT = {
     askCta: 'Ask about this piece',
     youMayLike: 'Pairs well with',
     backTo: 'Back to',
+
+    /* long-form listing (src/data/stories.js) - the section headings, plus the
+       shipping and custom-order text, which is identical on every listing */
+    storyDescription: 'Description',
+    storyFeatures: 'Features',
+    storySizes: 'Available sizes & prices',
+    storyCraftTitle: 'Handmade craftsmanship',
+    storyCraftBody:
+      'Every piece is made by hand in our Marrakech workshop. The hammered finish is worked strike by strike by skilled artisans, giving each piece its own distinctive pattern and character. Because each piece is handmade, minor variations in texture, finish and appearance are natural and make every piece unique.',
+    storyShippingTitle: 'Shipping',
+    storyShippingBody:
+      'Worldwide shipping: approximately 5-7 days. Morocco: approximately 4-5 days to cities throughout the country. Every piece is carefully packaged to help ensure safe transportation.',
+    storyCustomTitle: 'Custom orders',
+    storyCustomBody:
+      'Looking for a different size, shape, finish or design? Custom orders are welcome. We can make a piece to your measurements and to your interior design requirements - send us your dimensions and we will come back with a price.',
+    storyCustomSizes: 'Custom dimensions can also be discussed according to your project.',
+    storySignoff: 'Handcrafted in Marrakech 🇲🇦 · Moroccan heritage · Solid copper & brass · Made to order',
 
     /* reviews */
     reviews: 'Reviews',
@@ -261,6 +279,7 @@ export const DICT = {
     priceOnRequest: 'Prix sur demande',
     requestPrice: 'Demander le prix',
     size: 'Diamètre',
+    sizeDims: 'Dimensions',
     finish: 'Finition',
     qty: 'Quantité',
     addToCart: 'Ajouter au panier',
@@ -287,6 +306,23 @@ export const DICT = {
     askCta: 'Poser une question',
     youMayLike: 'S’accorde avec',
     backTo: 'Retour à',
+
+    /* fiche longue (src/data/stories.js) - titres de section, plus les textes
+       livraison et sur-mesure, identiques sur chaque fiche */
+    storyDescription: 'Description',
+    storyFeatures: 'Caractéristiques',
+    storySizes: 'Tailles & prix disponibles',
+    storyCraftTitle: 'Un travail entièrement fait main',
+    storyCraftBody:
+      'Chaque pièce est faite à la main dans notre atelier de Marrakech. La finition martelée est travaillée coup par coup par des artisans qualifiés, ce qui donne à chaque pièce son dessin et son caractère propres. Comme chaque pièce est faite main, de légères variations de texture, de finition et d’aspect sont naturelles et rendent chaque pièce unique.',
+    storyShippingTitle: 'Livraison',
+    storyShippingBody:
+      'Livraison dans le monde entier : environ 5 à 7 jours. Maroc : environ 4 à 5 jours vers toutes les villes du pays. Chaque pièce est soigneusement emballée pour un transport en toute sécurité.',
+    storyCustomTitle: 'Commandes sur mesure',
+    storyCustomBody:
+      'Vous cherchez une autre taille, une autre forme, une autre finition ou un autre modèle ? Les commandes sur mesure sont les bienvenues. Nous pouvons réaliser une pièce à vos dimensions et selon votre projet d’architecture intérieure - envoyez-nous vos mesures et nous vous répondons avec un prix.',
+    storyCustomSizes: 'D’autres dimensions peuvent être étudiées selon votre projet.',
+    storySignoff: 'Fait main à Marrakech 🇲🇦 · Patrimoine marocain · Cuivre & laiton massifs · Sur commande',
 
     reviews: 'Avis',
     reviewsTitle: 'Ce que disent les acheteurs',

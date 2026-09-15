@@ -64,8 +64,8 @@ export default function Header({ lang }) {
           style={{
             height: 'var(--nav-h)',
             background: lifted
-              ? 'linear-gradient(180deg, rgba(8,26,22,0.86), rgba(8,26,22,0.74))'
-              : 'linear-gradient(180deg, rgba(8,26,22,0.42), rgba(8,26,22,0.24))',
+              ? 'linear-gradient(180deg, rgba(var(--ink-rgb),0.86), rgba(var(--ink-rgb),0.74))'
+              : 'linear-gradient(180deg, rgba(var(--ink-rgb),0.42), rgba(var(--ink-rgb),0.24))',
             backdropFilter: 'blur(26px) saturate(155%)',
             WebkitBackdropFilter: 'blur(26px) saturate(155%)',
             border: `1px solid ${lifted ? 'rgba(224,169,109,0.26)' : 'rgba(242,234,223,0.09)'}`,
@@ -101,7 +101,7 @@ export default function Header({ lang }) {
                 language you would switch TO, which read backwards. */}
             <div
               className="hidden items-center rounded-full p-[3px] sm:flex"
-              style={{ background: 'rgba(8,26,22,0.5)', border: '1px solid var(--edge)' }}
+              style={{ background: 'rgba(var(--ink-rgb),0.5)', border: '1px solid var(--edge)' }}
               role="group"
               aria-label="Language"
             >
@@ -174,7 +174,7 @@ export default function Header({ lang }) {
           pointerEvents: menu ? 'auto' : 'none',
           opacity: menu ? 1 : 0,
           transition: 'opacity 600ms cubic-bezier(0.32,0.72,0,1)',
-          background: 'linear-gradient(160deg, rgba(8,26,22,0.96), rgba(14,43,36,0.96))',
+          background: 'linear-gradient(160deg, rgba(var(--ink-rgb),0.96), rgba(var(--surface-rgb),0.96))',
           backdropFilter: 'blur(30px)',
           WebkitBackdropFilter: 'blur(30px)',
         }}

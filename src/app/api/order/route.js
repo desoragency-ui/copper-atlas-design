@@ -15,7 +15,7 @@ export const runtime = 'nodejs';
  * Prices are recomputed here from the catalogue, never trusted from the client.
  */
 
-import { getProduct, sizesFor } from '@/data/products';
+import { getProduct, sizeLabel, sizesFor } from '@/data/products';
 
 const MAX_ITEMS = 40;
 const str = (v, max = 300) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
@@ -42,12 +42,14 @@ function priceLine(line) {
   }
 
   const qty = Math.max(1, Math.min(99, Number(line.qty) || 1));
+  const sizeRow = sizesFor(p, finish.id)?.find((s) => s.cm === line.size) ?? null;
   return {
     slug: p.slug,
     sku: p.sku,
     name: p.name.en,
     finish: finish.name.en,
     size: line.size ?? null,
+    sizeText: sizeRow ? sizeLabel(sizeRow, 'en') : null,
     qty,
     unit,
     total: unit == null ? null : unit * qty,
@@ -101,7 +103,7 @@ export async function POST(request) {
    * ──────────────────────────────────────────────────────────────────────── */
 
   const lines = items
-    .map((l) => `• ${l.name} - ${l.finish}${l.size ? `, ${l.size}cm` : ''} × ${l.qty} - ${l.total == null ? 'PRICE ON REQUEST' : `$${l.total}`}`)
+    .map((l) => `• ${l.name} - ${l.finish}${l.sizeText ? `, ${l.sizeText}` : ''} × ${l.qty} - ${l.total == null ? 'PRICE ON REQUEST' : `$${l.total}`}`)
     .join('\n');
 
   const text =

@@ -51,13 +51,13 @@ export default function ProductCard({ product: p, lang, priority = false }) {
 
           <div
             className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5"
-            style={{ background: 'linear-gradient(to top, rgba(8,26,22,0.86), transparent)' }}
+            style={{ background: 'linear-gradient(to top, rgba(var(--ink-rgb),0.86), transparent)' }}
           />
 
           {p.badge && (
             <span
               className="absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] uppercase tracking-eyebrow backdrop-blur-md"
-              style={{ background: 'rgba(8,26,22,0.62)', color: 'var(--brass)', border: '1px solid rgba(224,169,109,0.3)' }}
+              style={{ background: 'rgba(var(--ink-rgb),0.62)', color: 'var(--brass)', border: '1px solid rgba(224,169,109,0.3)' }}
             >
               {t(p.badge, lang)}
             </span>

@@ -57,7 +57,7 @@ export default function CategoryBento({ lang }) {
                       className="absolute inset-0"
                       style={{
                         background:
-                          'linear-gradient(to top, rgba(8,26,22,0.93) 4%, rgba(8,26,22,0.35) 46%, rgba(8,26,22,0.08) 100%)',
+                          'linear-gradient(to top, rgba(var(--ink-rgb),0.93) 4%, rgba(var(--ink-rgb),0.35) 46%, rgba(var(--ink-rgb),0.08) 100%)',
                       }}
                     />
 

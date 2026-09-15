@@ -2,10 +2,12 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import ProductDetail from '@/components/pdp/ProductDetail';
 import Reviews from '@/components/pdp/Reviews';
+import Story from '@/components/pdp/Story';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
 import { PRODUCTS, getProduct, getCategory, related, fromPrice, heroImage } from '@/data/products';
 import { ratingFor } from '@/data/reviews';
+import { story } from '@/data/stories';
 import { dict, t, LANGS } from '@/lib/i18n';
 import { SHOP } from '@/lib/shop';
 
@@ -18,9 +20,11 @@ export async function generateMetadata({ params }) {
   const p = getProduct(slug);
   if (!p) return {};
   const price = fromPrice(p);
+  const st = story(slug);
+  const longBody = st ? t(st.body, lang)[0] : t(p.description, lang);
   return {
-    title: t(p.name, lang),
-    description: `${t(p.tagline, lang)} - ${t(p.description, lang).slice(0, 150)}…`,
+    title: st ? t(st.seoTitle, lang) : t(p.name, lang),
+    description: `${t(p.tagline, lang)} - ${longBody.slice(0, 150)}…`,
     alternates: {
       canonical: `${SHOP.url}/${lang}/products/${slug}`,
       languages: {
@@ -48,6 +52,7 @@ export default async function ProductPage({ params }) {
   const rel = related(p);
   const price = fromPrice(p);
   const agg = ratingFor(slug);
+  const st = story(slug);
 
   // Product schema. Reviews are only emitted when every review is genuine - 
   // never publish aggregateRating built from demo data.
@@ -55,7 +60,7 @@ export default async function ProductPage({ params }) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: t(p.name, lang),
-    description: t(p.description, lang),
+    description: st ? t(st.body, lang).join(' ') : t(p.description, lang),
     image: p.finishes.flatMap((f) => f.images.map((i) => `${SHOP.url}${i}`)).slice(0, 6),
     sku: p.sku,
     brand: { '@type': 'Brand', name: SHOP.name },
@@ -105,13 +110,17 @@ export default async function ProductPage({ params }) {
 
       <ProductDetail product={p} lang={lang} />
 
-      {/* the long description, given room to breathe */}
-      <Reveal className="mx-auto mt-24 max-w-3xl text-center md:mt-32">
-        <p className="eyebrow mb-7">{lang === 'fr' ? 'La pièce' : 'The piece'}</p>
-        <p className="font-display text-[clamp(22px,2.9vw,34px)] leading-[1.32] text-balance">
-          {t(p.description, lang)}
-        </p>
-      </Reveal>
+      {/* the full listing - falls back to the short blurb when there is none */}
+      {st ? (
+        <Story product={p} lang={lang} />
+      ) : (
+        <Reveal className="mx-auto mt-24 max-w-3xl text-center md:mt-32">
+          <p className="eyebrow mb-7">{lang === 'fr' ? 'La pièce' : 'The piece'}</p>
+          <p className="font-display text-[clamp(22px,2.9vw,34px)] leading-[1.32] text-balance">
+            {t(p.description, lang)}
+          </p>
+        </Reveal>
+      )}
 
       <Reviews slug={p.slug} productName={t(p.name, lang)} lang={lang} />
 
