@@ -185,6 +185,24 @@ export const DICT = {
     orderSentBody: 'The workshop has your order and will reply with a full quote including shipping.',
     required: 'required',
 
+    /* PayPal checkout */
+    payTitle: 'Pay securely',
+    payIntro: 'PayPal, Pay Later, or any debit or credit card. Your card details are typed into PayPal, never into this site.',
+    payAddressNote: 'PayPal will ask for your delivery address.',
+    payQuoteNote:
+      'Your cart holds a piece that is priced on request, so it cannot be paid online yet. Send the order and the workshop will reply with a full written quote.',
+    payAlt: 'Prefer to pay another way?',
+    payAltCta: 'Send the order without paying',
+    payError: 'The payment did not go through and nothing was charged. Try again, or send the order on WhatsApp.',
+    shippingLabel: 'Shipping',
+    shippingFree: 'Free',
+    totalLabel: 'Total',
+    paidTitle: 'Payment received',
+    paidBody: 'Thank you. Your order is with the workshop, and PayPal is sending a receipt to your inbox.',
+    paidPendingBody:
+      'PayPal is reviewing this payment, which usually takes under 24 hours. The workshop starts work the moment it clears, and you will hear from us either way.',
+    orderRef: 'Order reference',
+
     /* footer */
     newsletter: 'New pieces, first look',
     newsletterBody: 'One email when something new leaves the bench. Nothing else.',
@@ -366,6 +384,24 @@ export const DICT = {
     orderSent: 'Commande envoyée',
     orderSentBody: 'L’atelier a votre commande et répondra avec un devis complet, livraison incluse.',
     required: 'obligatoire',
+
+    /* Paiement PayPal */
+    payTitle: 'Paiement sécurisé',
+    payIntro: 'PayPal, paiement en plusieurs fois, ou toute carte bancaire. Vos données de carte sont saisies chez PayPal, jamais sur ce site.',
+    payAddressNote: 'PayPal vous demandera votre adresse de livraison.',
+    payQuoteNote:
+      'Votre panier contient une pièce sur devis : elle ne peut pas encore être payée en ligne. Envoyez la commande et l’atelier vous répondra avec un devis écrit complet.',
+    payAlt: 'Vous préférez payer autrement ?',
+    payAltCta: 'Envoyer la commande sans payer',
+    payError: 'Le paiement n’est pas passé et rien n’a été débité. Réessayez, ou envoyez la commande sur WhatsApp.',
+    shippingLabel: 'Livraison',
+    shippingFree: 'Offerte',
+    totalLabel: 'Total',
+    paidTitle: 'Paiement reçu',
+    paidBody: 'Merci. Votre commande est entre les mains de l’atelier, et PayPal vous envoie un reçu par e-mail.',
+    paidPendingBody:
+      'PayPal vérifie ce paiement, ce qui prend en général moins de 24 heures. L’atelier commence dès qu’il est validé, et nous vous tiendrons informé dans tous les cas.',
+    orderRef: 'Référence de commande',
 
     newsletter: 'Les nouvelles pièces, en avant-première',
     newsletterBody: 'Un e-mail quand une pièce quitte l’établi. Rien d’autre.',

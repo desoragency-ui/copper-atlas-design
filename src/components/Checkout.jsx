@@ -1,13 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart } from '@/lib/cart';
 import { dict } from '@/lib/i18n';
 import { money, waLink, SHOP } from '@/lib/shop';
+import PayPalButtons from './PayPalButtons';
 import { ArrowUpRight, Whatsapp, Check, Minus, Plus } from './Icons';
-
-const STRIPE_ON = process.env.NEXT_PUBLIC_STRIPE_ENABLED === '1';
 
 export default function Checkout({ lang }) {
   const d = dict(lang);
@@ -17,6 +16,28 @@ export default function Checkout({ lang }) {
   });
   const [state, setState] = useState('idle'); // idle | sending | sent | error
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const formRef = useRef(null);
+
+  // PayPal is switched on from the host dashboard, so ask the server at runtime.
+  const [pp, setPp] = useState(null);
+  const [paid, setPaid] = useState(null); // { ref, status } once PayPal confirms
+  const [payErr, setPayErr] = useState(false);
+  useEffect(() => {
+    let off = false;
+    fetch('/api/paypal/config')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((cfg) => !off && setPp(cfg))
+      .catch(() => !off && setPp(null));
+    return () => {
+      off = true;
+    };
+  }, []);
+
+  // Pay online only when every line has a price - a quote-only piece has nothing to charge.
+  const payMode = Boolean(pp?.enabled && pp.clientId && !hasQuoteOnly && items.length);
+  // Display only - /api/paypal/create-order recomputes all of this on the server.
+  const shipping = pp ? (subtotal >= pp.freeShippingOver ? 0 : pp.shippingFlat) : null;
+  const total = subtotal + (shipping ?? 0);
 
   const orderText = () => {
     const lines = items
@@ -51,6 +72,29 @@ export default function Checkout({ lang }) {
       setState('error');
     }
   };
+
+  if (paid) {
+    const pending = paid.status !== 'COMPLETED';
+    return (
+      <div className="mx-auto max-w-lg px-6 py-32 text-center">
+        <span
+          className="mx-auto mb-8 grid h-20 w-20 place-items-center rounded-full"
+          style={{ background: 'rgba(224,169,109,0.14)', color: 'var(--brass)', border: '1px solid rgba(224,169,109,0.4)' }}
+        >
+          <Check className="h-8 w-8" />
+        </span>
+        <h1 className="font-display text-[clamp(34px,5vw,52px)]">{d.paidTitle}</h1>
+        <p className="mt-4 text-[15.5px] opacity-65">{pending ? d.paidPendingBody : d.paidBody}</p>
+        <p className="mt-6 text-[12px] uppercase tracking-wide2 opacity-50">
+          {d.orderRef} · <span className="tabular" style={{ color: 'var(--brass)' }}>{paid.ref}</span>
+        </p>
+        <Link href={`/${lang}/collections`} className="btn btn-primary group/btn mt-9">
+          {d.continueShopping}
+          <span className="btn-disc"><ArrowUpRight className="h-4 w-4" /></span>
+        </Link>
+      </div>
+    );
+  }
 
   if (state === 'sent') {
     return (
@@ -89,16 +133,21 @@ export default function Checkout({ lang }) {
 
       <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16">
         {/* form */}
-        <form onSubmit={submit} className="order-2 lg:order-1">
+        <form ref={formRef} onSubmit={submit} className="order-2 lg:order-1">
           <p className="eyebrow mb-7">{d.yourDetails}</p>
 
           <div className="grid gap-5 sm:grid-cols-2">
             <Field label={d.name} required value={form.name} onChange={set('name')} autoComplete="name" />
             <Field label={d.email} required type="email" value={form.email} onChange={set('email')} autoComplete="email" />
             <Field label={d.phone} required type="tel" value={form.phone} onChange={set('phone')} autoComplete="tel" />
-            <Field label={d.country} required value={form.country} onChange={set('country')} autoComplete="country-name" />
-            <Field label={d.city} required value={form.city} onChange={set('city')} autoComplete="address-level2" />
-            <Field label={d.address} required value={form.address} onChange={set('address')} autoComplete="street-address" className="sm:col-span-2" />
+            {/* PayPal collects the delivery address itself - don't ask for it twice. */}
+            {!payMode && (
+              <>
+                <Field label={d.country} required value={form.country} onChange={set('country')} autoComplete="country-name" />
+                <Field label={d.city} required value={form.city} onChange={set('city')} autoComplete="address-level2" />
+                <Field label={d.address} required value={form.address} onChange={set('address')} autoComplete="street-address" className="sm:col-span-2" />
+              </>
+            )}
 
             <label className="sm:col-span-2">
               <span className="label">{d.notes}</span>
@@ -112,7 +161,55 @@ export default function Checkout({ lang }) {
             </label>
           </div>
 
-          <p className="mt-6 text-[13px] opacity-55">{d.orderVia}</p>
+          {payMode ? (
+            <div className="mt-8">
+              <p className="eyebrow mb-4">{d.payTitle}</p>
+              <p className="mb-2 text-[13.5px] opacity-65">{d.payIntro}</p>
+              <p className="mb-6 text-[13px] opacity-50">{d.payAddressNote}</p>
+
+              {payErr && (
+                <p className="mb-4 rounded-2xl px-4 py-3 text-[13px]"
+                  style={{ background: 'rgba(200,90,60,0.14)', border: '1px solid rgba(200,90,60,0.4)' }}>
+                  {d.payError}
+                </p>
+              )}
+
+              <div className="max-w-[420px]">
+                <PayPalButtons
+                  clientId={pp.clientId}
+                  lang={lang}
+                  items={items}
+                  customer={form}
+                  validate={() => {
+                    setPayErr(false);
+                    return formRef.current?.reportValidity() ?? false;
+                  }}
+                  onPaid={(r) => {
+                    setPaid(r);
+                    clear();
+                  }}
+                  onError={() => setPayErr(true)}
+                />
+              </div>
+
+              <p className="mt-8 text-[13px] opacity-55">
+                {d.payAlt}{' '}
+                <button type="submit" disabled={state === 'sending'} className="link-underline" style={{ color: 'var(--brass)' }}>
+                  {state === 'sending' ? d.sending : d.payAltCta}
+                </button>
+              </p>
+            </div>
+          ) : (
+            <>
+              {pp?.enabled && hasQuoteOnly && (
+                <p className="mt-6 rounded-2xl px-4 py-3 text-[13px] opacity-80"
+                  style={{ background: 'rgba(224,169,109,0.08)', border: '1px solid rgba(224,169,109,0.25)' }}>
+                  {d.payQuoteNote}
+                </p>
+              )}
+              <p className="mt-6 text-[13px] opacity-55">{d.orderVia}</p>
+            </>
+          )}
 
           {state === 'error' && (
             <p className="mt-4 rounded-2xl px-4 py-3 text-[13px]"
@@ -124,10 +221,12 @@ export default function Checkout({ lang }) {
           )}
 
           <div className="mt-7 flex flex-wrap gap-3">
-            <button type="submit" disabled={state === 'sending'} className="btn btn-primary group/btn disabled:opacity-60">
-              {state === 'sending' ? d.sending : STRIPE_ON ? d.checkout : d.placeOrder}
-              <span className="btn-disc"><ArrowUpRight className="h-4 w-4" /></span>
-            </button>
+            {!payMode && (
+              <button type="submit" disabled={state === 'sending'} className="btn btn-primary group/btn disabled:opacity-60">
+                {state === 'sending' ? d.sending : d.placeOrder}
+                <span className="btn-disc"><ArrowUpRight className="h-4 w-4" /></span>
+              </button>
+            )}
             <a href={waLink(orderText())} target="_blank" rel="noopener noreferrer" className="btn btn-ghost group/btn">
               {d.orSendWhatsapp}
               <span className="btn-disc"><Whatsapp className="h-4 w-4" /></span>
@@ -179,13 +278,34 @@ export default function Checkout({ lang }) {
 
               <div className="rule my-5" />
 
-              <div className="flex items-baseline justify-between">
-                <span className="text-[12px] uppercase tracking-wide2 opacity-60">{d.subtotal}</span>
-                <span className="tabular font-display text-2xl" style={{ color: 'var(--brass)' }}>
-                  {money(subtotal)}
-                </span>
-              </div>
-              <p className="mt-2 text-[11.5px] opacity-45">{d.shippingAtCheckout}</p>
+              {payMode ? (
+                <div className="space-y-2.5">
+                  <div className="flex items-baseline justify-between text-[13.5px]">
+                    <span className="opacity-60">{d.subtotal}</span>
+                    <span className="tabular">{money(subtotal)}</span>
+                  </div>
+                  <div className="flex items-baseline justify-between text-[13.5px]">
+                    <span className="opacity-60">{d.shippingLabel}</span>
+                    <span className="tabular">{shipping ? money(shipping) : d.shippingFree}</span>
+                  </div>
+                  <div className="flex items-baseline justify-between pt-2">
+                    <span className="text-[12px] uppercase tracking-wide2 opacity-60">{d.totalLabel}</span>
+                    <span className="tabular font-display text-2xl" style={{ color: 'var(--brass)' }}>
+                      {money(total)}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-[12px] uppercase tracking-wide2 opacity-60">{d.subtotal}</span>
+                    <span className="tabular font-display text-2xl" style={{ color: 'var(--brass)' }}>
+                      {money(subtotal)}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[11.5px] opacity-45">{d.shippingAtCheckout}</p>
+                </>
+              )}
             </div>
           </div>
         </aside>

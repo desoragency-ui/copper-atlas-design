@@ -63,14 +63,48 @@ days after delivery.
 
 ## Payments
 
-Ships with **cart → order form → email + WhatsApp**. No card keys needed, works
-today, and shipping is quoted per order — which is right for heavy hand-made
-metal going to unpredictable destinations.
+**PayPal** (PayPal, Pay Later, and debit/credit cards through PayPal's window)
+switches on the moment its keys are in the host's environment variables. Until
+then, and for any cart holding a priced-on-request piece, checkout falls back to
+**order form → email + WhatsApp**, so the store always takes orders.
 
-Stripe is wired behind a flag. Set `STRIPE_SECRET_KEY` and
-`NEXT_PUBLIC_STRIPE_ENABLED=1`, then replace the marked block in
-`src/app/api/order/route.js` with a Checkout Session. Line prices are already
-recomputed server-side from the catalogue, so the client can't tamper with them.
+Stripe is not an option: it does not serve companies domiciled in Morocco.
+
+### Connecting the owner's PayPal
+
+The owner does this himself from a hidden page, **`/en/setup`** (or `/fr/setup`):
+
+1. Set `SETUP_PASSWORD` (12+ characters) in Netlify and redeploy. Without it the
+   page is switched off.
+2. Send the owner the link and the password, privately.
+3. The page walks him through creating a PayPal app, **checks his keys against
+   PayPal**, then prints the exact lines to paste into Netlify with one Copy
+   button, plus the click-path to paste them and redeploy.
+4. He presses Refresh; the status turns green.
+
+The site never stores the keys. A secret a web form can write is a secret a
+leaked page password can overwrite — and whoever holds the PayPal secret
+receives every payment. Keys live only in the host's environment variables,
+behind the owner's own Netlify login.
+
+### How a payment is protected
+
+- `/api/paypal/create-order` reprices every line from the catalogue; the
+  browser only names pieces, finishes, sizes and quantities.
+- Each order carries an HMAC **seal** of its reference and total, keyed with the
+  PayPal secret. `/api/paypal/capture` refuses any order whose seal does not
+  match, so nobody can create their own $1 order with the public Client ID and
+  pass it off as a paid one.
+- Capture is idempotent (`PayPal-Request-Id`), so a double click or a retried
+  request cannot charge twice or email the workshop twice.
+- A `PENDING` capture (PayPal holding the money for review) is flagged in the
+  workshop email: do not start making the piece until PayPal confirms.
+
+Shipping: free over `SHOP.freeShippingOver` ($400), otherwise
+`SHIPPING_FLAT_USD`. The `/setup` page warns while that fee is unset.
+
+`src/lib/paypal.js` uses only `fetch` and Web Crypto, so it runs unchanged on
+Netlify Functions and on Cloudflare Workers.
 
 ## SEO
 
