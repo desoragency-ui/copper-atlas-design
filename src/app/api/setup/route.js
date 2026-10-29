@@ -2,13 +2,15 @@ import { NextResponse } from 'next/server';
 import { accessToken, paypalConfig, safeEqual } from '@/lib/paypal';
 import { shippingFlat } from '@/lib/pricing';
 import { SHOP } from '@/lib/shop';
+import { OWNER_HASH, OWNER_SALT } from '@/lib/owner';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /**
- * Backs the owner's /setup page. Locked unless SETUP_PASSWORD is set (12+
- * characters) in the host dashboard. It can report what is connected and test
+ * Backs the owner's /setup page. Unlocks with the owner password, whose salted
+ * hash ships in lib/owner.js, or with a SETUP_PASSWORD (12+ characters) set in
+ * the host dashboard as an override. It can report what is connected and test
  * a pair of PayPal keys - it never stores anything. The keys only become live
  * when the owner pastes them into the host's environment variables, which sit
  * behind his host login rather than behind this password.
@@ -18,9 +20,26 @@ const MIN_LEN = 12;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/** True when the password matches the shipped hash or the host override. */
+async function passwordOk(input) {
+  if (!input) return false;
+  const envPw = process.env.SETUP_PASSWORD || '';
+  // Both checks always run, so the response time does not reveal which one matched.
+  const [byHash, byEnv] = await Promise.all([
+    OWNER_HASH ? safeEqual(await sha256Hex(`${OWNER_SALT}:${input}`), OWNER_HASH) : false,
+    envPw.length >= MIN_LEN ? safeEqual(input, envPw) : false,
+  ]);
+  return byHash || byEnv;
+}
+
 export async function POST(request) {
-  const expected = process.env.SETUP_PASSWORD || '';
-  if (expected.length < MIN_LEN) {
+  const configured = Boolean(OWNER_HASH) || (process.env.SETUP_PASSWORD || '').length >= MIN_LEN;
+  if (!configured) {
     return NextResponse.json({ error: 'locked' }, { status: 503 });
   }
 
@@ -31,7 +50,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'bad_json' }, { status: 400 });
   }
 
-  if (!(await safeEqual(str(body?.password, 200), expected))) {
+  if (!(await passwordOk(str(body?.password, 200)))) {
     // Slow every wrong guess down so the password cannot be brute-forced.
     await sleep(1200);
     return NextResponse.json({ error: 'wrong_password' }, { status: 401 });
