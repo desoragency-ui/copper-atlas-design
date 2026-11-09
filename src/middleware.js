@@ -3,16 +3,20 @@ import { NextResponse } from 'next/server';
 const LANGS = ['en', 'fr'];
 const DEFAULT = 'en';
 
-/** www.* goes to the bare domain (the official address in src/lib/shop.js);
- *  then `/` and any unprefixed path go to a locale, preferring the browser's. */
-export function middleware(request) {
-  const { pathname, hostname } = request.nextUrl;
+const SITE = 'copperatlasdesign.com';
 
-  if (hostname === 'www.copperatlasdesign.com') {
-    const bare = request.nextUrl.clone();
-    bare.hostname = 'copperatlasdesign.com';
-    bare.port = '';
-    return NextResponse.redirect(bare, 308);
+/** On the real domain, www.* and plain http:// both go to https://copperatlasdesign.com
+ *  (the official address in src/lib/shop.js); localhost and workers.dev are left alone.
+ *  Then `/` and any unprefixed path go to a locale, preferring the browser's. */
+export function middleware(request) {
+  const { pathname, hostname, protocol } = request.nextUrl;
+
+  if (hostname === `www.${SITE}` || (hostname === SITE && protocol === 'http:')) {
+    const canonical = request.nextUrl.clone();
+    canonical.protocol = 'https:';
+    canonical.hostname = SITE;
+    canonical.port = '';
+    return NextResponse.redirect(canonical, 308);
   }
 
   if (LANGS.some((l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`))) {
