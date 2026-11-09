@@ -11,7 +11,7 @@
  *   PAYPAL_ENV            "sandbox" for test money, "live" for real money
  *
  * Uses fetch + Web Crypto only (no node:crypto), so the same file runs on
- * Netlify Functions and on Cloudflare Workers.
+ * Cloudflare Workers and on Node hosts.
  */
 
 const BASES = {

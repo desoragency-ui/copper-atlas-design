@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "copper-atlas",
+  "main": ".open-next/worker.js",
+  // Must be 2025-04-01 or later: that is what copies the host's variables and
+  // secrets (PAYPAL_CLIENT_ID and friends) into process.env, which the
+  // PayPal and setup routes read at request time.
+  "compatibility_date": "2025-10-01",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "nodejs_compat_populate_process_env",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "copper-atlas"
+    }
+  ],
+  "observability": { "enabled": true }
+}

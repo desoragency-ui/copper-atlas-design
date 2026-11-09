@@ -1,7 +1,7 @@
 # Copper Atlas Design — storefront
 
 Bilingual (EN/FR) e-commerce storefront for a Marrakech coppersmith workshop.
-Next.js 15 App Router, Tailwind, no database, deploys to Vercel as static pages
+Next.js 15 App Router, Tailwind, no database, hosted on Cloudflare Workers
 plus one API route.
 
 ```bash
@@ -31,7 +31,7 @@ npm run build    # verifies all static pages
    and show a "Request a price" button. When Tarik sends the sink price sheet,
    replace `priceOnRequest: true` with `price: <usd>` (or a `sizes[]` array) in
    `src/data/products.js` and they become normal add-to-cart products.
-3. **Order email.** Set `RESEND_API_KEY` + `ORDER_EMAIL_TO` in Vercel. Without
+3. **Order email.** Set `RESEND_API_KEY` + `ORDER_EMAIL_TO` on Cloudflare. Without
    them orders still submit and are written to the platform logs, and the
    customer's WhatsApp fallback always works — but nothing lands in an inbox.
 4. **Reviews.** `REAL_REVIEWS` is empty. See below.
@@ -74,18 +74,19 @@ Stripe is not an option: it does not serve companies domiciled in Morocco.
 
 The owner does this himself from a hidden page, **`/en/setup`** (or `/fr/setup`):
 
-1. Set `SETUP_PASSWORD` (12+ characters) in Netlify and redeploy. Without it the
-   page is switched off.
+1. The page opens with the owner password, stored only as a salted hash in
+   `src/lib/owner.js`. A `SETUP_PASSWORD` variable (12+ characters) on the host
+   also works, as an override.
 2. Send the owner the link and the password, privately.
 3. The page walks him through creating a PayPal app, **checks his keys against
-   PayPal**, then prints the exact lines to paste into Netlify with one Copy
-   button, plus the click-path to paste them and redeploy.
+   PayPal**, then lists each variable (name, value, type) with Copy buttons,
+   plus the click-path to add them on Cloudflare.
 4. He presses Refresh; the status turns green.
 
 The site never stores the keys. A secret a web form can write is a secret a
 leaked page password can overwrite — and whoever holds the PayPal secret
 receives every payment. Keys live only in the host's environment variables,
-behind the owner's own Netlify login.
+behind the owner's own Cloudflare login.
 
 ### How a payment is protected
 
@@ -104,7 +105,7 @@ Shipping: free over `SHOP.freeShippingOver` ($400), otherwise
 `SHIPPING_FLAT_USD`. The `/setup` page warns while that fee is unset.
 
 `src/lib/paypal.js` uses only `fetch` and Web Crypto, so it runs unchanged on
-Netlify Functions and on Cloudflare Workers.
+Cloudflare Workers and on Node hosts.
 
 ## SEO
 
@@ -119,14 +120,41 @@ Netlify Functions and on Cloudflare Workers.
 - Images pre-converted to WebP at ingest, `unoptimized: true` — no Vercel
   image-transform quota consumed
 
-## Deploying to Vercel
+## Deploying to Cloudflare
 
-Root directory `copper-atlas`, framework preset Next.js, no build overrides.
-Add the env vars from `.env.example`.
+Built with the OpenNext adapter (`@opennextjs/cloudflare`), configured in
+`wrangler.jsonc` and `open-next.config.ts`.
 
-Note: the Vercel **Hobby** plan prohibits commercial use. A shop selling goods
-needs at least the Pro plan, or move it to Cloudflare Pages (also free, and the
-free tier permits commercial sites).
+```bash
+npm run cf:preview   # build + run locally on Cloudflare's real runtime (workerd)
+npm run cf:deploy    # build + publish
+```
+
+- Every page is prebuilt, so the read-only static-assets cache is enough: no
+  R2 bucket, no queue, nothing extra to pay for. The Worker is about 1.1 MB
+  compressed, under the 3 MB free-plan limit.
+- Windows is not fully supported by OpenNext; the build works but prints a
+  warning. Use WSL if it ever misbehaves.
+- Variables and secrets live on Cloudflare (see `.env.example`); they are never
+  in the repository. `.dev.vars` is the local-only equivalent and is gitignored.
+- OpenNext copies any `.env`, `.env.local` or `.env.production*` file into the
+  Worker bundle, where it would override the keys set on Cloudflare. A guard
+  (`scripts/cf-guard.mjs`) stops `cf:preview` / `cf:deploy` while one exists.
+  Rename it (e.g. `.env.local.off`) before building; `npm run dev` needs it back.
+- `netlify.toml` is kept only until the Netlify copy is switched off.
+
+
+## Adding products
+
+1. Drop photos into `public/products/<new-slug>/01.webp`, `02.webp`, …
+   (WebP, max 1800px wide — see `scripts/` notes below)
+2. Add an entry to `PRODUCTS` in `src/data/products.js`, listing the image
+   numbers under each finish
+3. Nothing else — listing pages, sitemap, structured data and search all pick
+   it up automatically
+
+Images were ingested from the client's originals with a Pillow script:
+deduplicate by content hash, resize to 1800px, encode WebP q86.
 
 ## Adding products
 

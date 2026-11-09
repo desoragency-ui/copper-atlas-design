@@ -8,7 +8,7 @@ import { ArrowUpRight, Check } from './Icons';
  * sitemap) and locked behind SETUP_PASSWORD.
  *
  * It walks the owner through getting his PayPal keys, proves they work, then
- * hands him the exact lines to paste into Netlify. It never saves the keys:
+ * hands him the exact names and values to add on the host (Cloudflare). It never saves the keys:
  * they only go live from the host dashboard, which sits behind his own login.
  * The password lives in this component's memory only - a reload locks it again.
  */
@@ -33,7 +33,7 @@ const T = {
     shipUnset: 'Shipping fee not set - orders under $400 currently ship free',
     shipFree: (n) => `Orders over $${n} always ship free`,
     mailOn: 'Order emails: on',
-    mailOff: 'Order emails: off (orders are only kept in the Netlify logs)',
+    mailOff: 'Order emails: off (PayPal still emails the owner on every sale)',
     connect: 'Connect my PayPal',
     s1: 'Have a PayPal Business account',
     s1b: 'Not a personal one. If you do not have it yet, create it, then confirm your email and link your bank account.',
@@ -56,19 +56,22 @@ const T = {
     badKeys: 'PayPal does not accept these keys. Check you copied both in full, and that the mode above matches the page you copied them from (Sandbox = Test, Live = Real money).',
     unreachable: 'Could not reach PayPal. Check your internet and try again.',
     missing: 'Paste both keys first.',
-    s5: 'Paste them into Netlify',
-    s5b: 'Last step. This switches PayPal on for the whole store.',
+    s5: 'Add them on Cloudflare',
+    s5b: 'Last step. This switches PayPal on for the whole store. Add each line below as its own variable.',
     shipQ: 'Shipping fee for orders under $400 (USD)',
-    copy: 'Copy all',
+    copy: 'Copy',
     copied: 'Copied',
-    n1: 'Open app.netlify.com and log in.',
-    n2: 'Click your store site.',
-    n3: 'Click "Site configuration", then "Environment variables".',
-    n4: 'Click "Add a variable", then "Import from a .env file".',
-    n5: 'Paste what you copied, then click "Import variables".',
-    n6: 'Click "Deploys", then "Trigger deploy", then "Deploy site".',
-    n7: 'Wait about 2 minutes, come back here and press Refresh. It should say Connected.',
-    openNetlify: 'Open Netlify',
+    colName: 'Name',
+    colValue: 'Value',
+    typeSecret: 'Type: Secret',
+    typeText: 'Type: Text',
+    n1: 'Open dash.cloudflare.com and log in.',
+    n2: 'Click "Workers & Pages", then click copper-atlas.',
+    n3: 'Click "Settings", then "Variables and Secrets".',
+    n4: 'Click "Add". For each row above choose its Type, paste the Name, paste the Value, and save. Use the Copy buttons.',
+    n5: 'Click "Deploy" when Cloudflare offers it.',
+    n6: 'Wait about a minute, come back here and press Refresh. It should say Connected.',
+    openHost: 'Open Cloudflare',
     bank: 'Before switching to real money, ask your bank how PayPal payouts reach your Moroccan account, and whether there is a yearly limit.',
   },
   fr: {
@@ -90,7 +93,7 @@ const T = {
     shipUnset: 'Frais de livraison non définis - les commandes sous 400 $ sont livrées gratuitement',
     shipFree: (n) => `Livraison toujours offerte au-dessus de ${n} $`,
     mailOn: 'E-mails de commande : activés',
-    mailOff: 'E-mails de commande : désactivés (les commandes restent seulement dans les journaux Netlify)',
+    mailOff: 'E-mails de commande : désactivés (PayPal envoie quand même un e-mail au propriétaire à chaque vente)',
     connect: 'Connecter mon PayPal',
     s1: 'Avoir un compte PayPal Business',
     s1b: 'Pas un compte personnel. Si vous n’en avez pas, créez-le, puis confirmez votre e-mail et reliez votre compte bancaire.',
@@ -113,19 +116,22 @@ const T = {
     badKeys: 'PayPal refuse ces clés. Vérifiez que vous avez copié les deux en entier, et que le mode ci-dessus correspond à la page d’où vous les avez copiées (Sandbox = Test, Live = Argent réel).',
     unreachable: 'Impossible de joindre PayPal. Vérifiez votre connexion et réessayez.',
     missing: 'Collez d’abord les deux clés.',
-    s5: 'Collez-les dans Netlify',
-    s5b: 'Dernière étape. C’est elle qui active PayPal sur toute la boutique.',
+    s5: 'Ajoutez-les sur Cloudflare',
+    s5b: 'Dernière étape. C’est elle qui active PayPal sur toute la boutique. Ajoutez chaque ligne ci-dessous comme une variable séparée.',
     shipQ: 'Frais de livraison pour les commandes sous 400 $ (USD)',
-    copy: 'Tout copier',
+    copy: 'Copier',
     copied: 'Copié',
-    n1: 'Ouvrez app.netlify.com et connectez-vous.',
-    n2: 'Cliquez sur le site de votre boutique.',
-    n3: 'Cliquez sur « Site configuration », puis « Environment variables ».',
-    n4: 'Cliquez sur « Add a variable », puis « Import from a .env file ».',
-    n5: 'Collez ce que vous avez copié, puis cliquez sur « Import variables ».',
-    n6: 'Cliquez sur « Deploys », puis « Trigger deploy », puis « Deploy site ».',
-    n7: 'Attendez environ 2 minutes, revenez ici et cliquez sur Actualiser. Il doit être écrit Connecté.',
-    openNetlify: 'Ouvrir Netlify',
+    colName: 'Nom',
+    colValue: 'Valeur',
+    typeSecret: 'Type : Secret',
+    typeText: 'Type : Texte',
+    n1: 'Ouvrez dash.cloudflare.com et connectez-vous.',
+    n2: 'Cliquez sur « Workers & Pages », puis sur copper-atlas.',
+    n3: 'Cliquez sur « Settings », puis « Variables and Secrets ».',
+    n4: 'Cliquez sur « Add ». Pour chaque ligne ci-dessus, choisissez son Type, collez le Nom, collez la Valeur, puis enregistrez. Utilisez les boutons Copier.',
+    n5: 'Cliquez sur « Deploy » quand Cloudflare le propose.',
+    n6: 'Attendez environ une minute, revenez ici et cliquez sur Actualiser. Il doit être écrit Connecté.',
+    openHost: 'Ouvrir Cloudflare',
     bank: 'Avant de passer à l’argent réel, demandez à votre banque comment les virements PayPal arrivent sur votre compte marocain, et s’il existe une limite annuelle.',
   },
 };
@@ -146,7 +152,7 @@ export default function SetupPayPal({ lang }) {
   const [showSec, setShowSec] = useState(false);
   const [check, setCheck] = useState(null); // null | 'busy' | 'ok' | reason
   const [ship, setShip] = useState('');
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState('');
 
   const call = async (payload) => {
     const res = await fetch('/api/setup', {
@@ -183,21 +189,24 @@ export default function SetupPayPal({ lang }) {
   };
 
   const shipNum = Number(ship);
-  const envBlock =
-    `PAYPAL_CLIENT_ID=${cid.trim()}\n` +
-    `PAYPAL_CLIENT_SECRET=${sec.trim()}\n` +
-    `PAYPAL_ENV=${env}\n` +
-    (ship !== '' && Number.isFinite(shipNum) && shipNum >= 0 ? `SHIPPING_FLAT_USD=${shipNum}\n` : '');
+  // One row per variable: Cloudflare's dashboard takes them one at a time.
+  const rows = [
+    { name: 'PAYPAL_CLIENT_ID', value: cid.trim(), secret: false },
+    { name: 'PAYPAL_CLIENT_SECRET', value: sec.trim(), secret: true },
+    { name: 'PAYPAL_ENV', value: env, secret: false },
+    ...(ship !== '' && Number.isFinite(shipNum) && shipNum >= 0
+      ? [{ name: 'SHIPPING_FLAT_USD', value: String(shipNum), secret: false }]
+      : []),
+  ];
 
-  const copyAll = async () => {
+  const copyText = async (key, text) => {
     try {
-      await navigator.clipboard.writeText(envBlock);
+      await navigator.clipboard.writeText(text);
     } catch {
-      document.getElementById('env-block')?.select();
-      document.execCommand?.('copy');
+      /* clipboard blocked: the value is still on screen to select by hand */
     }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+    setCopied(key);
+    setTimeout(() => setCopied(''), 2200);
   };
 
   /* ── locked ──────────────────────────────────────────────────────────── */
@@ -396,32 +405,46 @@ export default function SetupPayPal({ lang }) {
                 />
               </label>
 
-              <div className="bezel mt-6">
-                <div className="bezel-core p-2">
-                  <textarea
-                    id="env-block"
-                    readOnly
-                    rows={envBlock.split('\n').length}
-                    value={envBlock.trimEnd()}
-                    className="w-full resize-none bg-transparent px-4 py-3 font-mono text-[12.5px] leading-relaxed outline-none"
-                    onFocus={(e) => e.target.select()}
-                  />
-                </div>
-              </div>
+              <ul className="mt-6 space-y-3">
+                {rows.map((r) => (
+                  <li key={r.name} className="bezel">
+                    <div className="bezel-core p-4 md:p-5">
+                      <p className="mb-3 text-[11px] uppercase tracking-wide2" style={{ color: 'var(--brass)' }}>
+                        {r.secret ? t.typeSecret : t.typeText}
+                      </p>
+                      {[
+                        [t.colName, r.name, `${r.name}:n`],
+                        [t.colValue, r.secret && !showSec ? '•'.repeat(24) : r.value, `${r.name}:v`, r.value],
+                      ].map(([label, shown, key, real]) => (
+                        <div key={key} className="flex items-center justify-between gap-3 py-1.5">
+                          <div className="min-w-0">
+                            <p className="label !mb-1">{label}</p>
+                            <p className="break-all font-mono text-[12.5px] opacity-90">{shown}</p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyText(key, real ?? r.name)}
+                            className="shrink-0 rounded-full px-4 py-2 text-[11px] uppercase tracking-wide2 transition-all duration-400 ease-atlas"
+                            style={{ border: '1px solid var(--edge-strong)', color: copied === key ? 'var(--verdigris)' : 'inherit' }}
+                          >
+                            {copied === key ? t.copied : t.copy}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
 
-              <div className="mt-4 flex flex-wrap gap-3">
-                <button type="button" onClick={copyAll} className="btn btn-primary group/btn">
-                  {copied ? t.copied : t.copy}
-                  <span className="btn-disc"><Check className="h-4 w-4" /></span>
-                </button>
-                <a href="https://app.netlify.com" target="_blank" rel="noopener noreferrer" className="btn btn-ghost group/btn">
-                  {t.openNetlify}
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" className="btn btn-ghost group/btn">
+                  {t.openHost}
                   <span className="btn-disc"><ArrowUpRight className="h-4 w-4" /></span>
                 </a>
               </div>
 
               <ol className="mt-8 list-decimal space-y-2.5 pl-5 text-[14.5px] leading-relaxed opacity-80 marker:opacity-50">
-                {[t.n1, t.n2, t.n3, t.n4, t.n5, t.n6, t.n7].map((x) => (
+                {[t.n1, t.n2, t.n3, t.n4, t.n5, t.n6].map((x) => (
                   <li key={x}>{x}</li>
                 ))}
               </ol>

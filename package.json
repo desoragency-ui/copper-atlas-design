@@ -7,16 +7,20 @@
     "dev": "next dev -p 3100",
     "build": "next build",
     "start": "next start -p 3100",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cf:preview": "node scripts/cf-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "node scripts/cf-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
-    "next": "15.5.25",
+    "@opennextjs/cloudflare": "^1.20.16",
+    "next": "^15.5.29",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "wrangler": "^4.158.0"
   }
 }

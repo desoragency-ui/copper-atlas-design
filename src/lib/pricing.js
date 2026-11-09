@@ -3,7 +3,7 @@
  * workshop's inbox is computed here from the catalogue - a price sent by the
  * browser is never trusted, because anyone can edit it before it is posted.
  *
- * Plain JS with no Node-only imports, so it runs on Netlify Functions and on
+ * Plain JS with no Node-only imports, so it runs on Cloudflare Workers and on
  * Cloudflare Workers alike.
  */
 import { getProduct, sizeLabel, sizesFor } from '@/data/products';
@@ -58,7 +58,7 @@ export function priceCart(rawItems) {
 
 /**
  * Shipping for a paid order. Free above SHOP.freeShippingOver - the promise in
- * the site's top banner - otherwise the flat fee the owner sets in Netlify as
+ * the site's top banner - otherwise the flat fee the owner sets on the host as
  * SHIPPING_FLAT_USD. Unset means 0, and the owner's /setup page warns about it.
  */
 export function shippingFor(subtotal) {

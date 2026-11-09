@@ -10,3 +10,9 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+# Cloudflare / OpenNext
+.open-next
+.wrangler
+.dev.vars
+.env*.off

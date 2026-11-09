@@ -10,6 +10,21 @@ const nextConfig = {
     unoptimized: true,
   },
   eslint: { ignoreDuringBuilds: true },
+  // The same four headers netlify.toml sends. Cloudflare serves static files
+  // without running this app, so public/_headers covers those instead.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Permissions-Policy', value: 'geolocation=(), microphone=(), camera=(), interest-cohort=()' },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
