@@ -9,7 +9,7 @@
     "start": "next start -p 3100",
     "lint": "next lint",
     "cf:preview": "node scripts/cf-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf:deploy": "node scripts/cf-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "cf:deploy": "node scripts/cf-guard.mjs && opennextjs-cloudflare build && opennextjs-cloudflare deploy --keep-vars"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.16",
