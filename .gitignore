@@ -16,3 +16,4 @@ npm-debug.log*
 .wrangler
 .dev.vars
 .env*.off
+*.secrets.json
