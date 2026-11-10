@@ -65,8 +65,9 @@ export default function ProductDetail({ product: p, lang }) {
 
   return (
     <>
-      <div className="grid gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-16">
-        <div className="lg:sticky lg:top-28 lg:self-start">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.06fr_0.94fr] lg:gap-16">
+        {/* min-w-0: the thumbnail strip is 7 x 70px; without it the column grows past a phone screen */}
+        <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <Gallery images={finish.images} alt={t(p.name, lang)} lang={lang} />
         </div>
 
