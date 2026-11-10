@@ -2,7 +2,8 @@
 
 Bilingual (EN/FR) e-commerce storefront for a Marrakech coppersmith workshop.
 Next.js 15 App Router, Tailwind, no database, hosted on Cloudflare Workers
-plus one API route.
+with a few API routes (PayPal checkout, order intake). New to this project?
+Start with [`docs/HANDOVER.md`](docs/HANDOVER.md).
 
 ```bash
 npm install
@@ -117,8 +118,8 @@ Cloudflare Workers and on Node hosts.
   (GPTBot, PerplexityBot, ClaudeBot and Google-Extended are explicitly allowed)
 - Three buying guides targeting the questions people search before buying;
   each H2 is a question so the guides double as FAQ entities
-- Images pre-converted to WebP at ingest, `unoptimized: true` — no Vercel
-  image-transform quota consumed
+- Images pre-converted to WebP at ingest and served as-is (`unoptimized: true`),
+  so no image-transform service is needed
 
 ## Deploying to Cloudflare
 
@@ -141,25 +142,11 @@ npm run cf:deploy    # build + publish
   Worker bundle, where it would override the keys set on Cloudflare. A guard
   (`scripts/cf-guard.mjs`) stops `cf:preview` / `cf:deploy` while one exists.
   Rename it (e.g. `.env.local.off`) before building; `npm run dev` needs it back.
-- `netlify.toml` is kept only until the Netlify copy is switched off.
-
 
 ## Adding products
 
 1. Drop photos into `public/products/<new-slug>/01.webp`, `02.webp`, …
-   (WebP, max 1800px wide — see `scripts/` notes below)
-2. Add an entry to `PRODUCTS` in `src/data/products.js`, listing the image
-   numbers under each finish
-3. Nothing else — listing pages, sitemap, structured data and search all pick
-   it up automatically
-
-Images were ingested from the client's originals with a Pillow script:
-deduplicate by content hash, resize to 1800px, encode WebP q86.
-
-## Adding products
-
-1. Drop photos into `public/products/<new-slug>/01.webp`, `02.webp`, …
-   (WebP, max 1800px wide — see `scripts/` notes below)
+   (WebP, max 1800px wide)
 2. Add an entry to `PRODUCTS` in `src/data/products.js`, listing the image
    numbers under each finish
 3. Nothing else — listing pages, sitemap, structured data and search all pick
